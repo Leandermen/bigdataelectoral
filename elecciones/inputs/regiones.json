@@ -1,66 +1,66 @@
 [
     {
-      "c": 3015,
-      "d": "DE ARICA Y PARINACOTA"
+        "c": 3015,
+        "d": "DE ARICA Y PARINACOTA"
     },
     {
-      "c": 3001,
-      "d": "DE TARAPACA"
+        "c": 3001,
+        "d": "DE TARAPACA"
     },
     {
-      "c": 3002,
-      "d": "DE ANTOFAGASTA"
+        "c": 3002,
+        "d": "DE ANTOFAGASTA"
     },
     {
-      "c": 3003,
-      "d": "DE ATACAMA"
+        "c": 3003,
+        "d": "DE ATACAMA"
     },
     {
-      "c": 3004,
-      "d": "DE COQUIMBO"
+        "c": 3004,
+        "d": "DE COQUIMBO"
     },
     {
-      "c": 3005,
-      "d": "DE VALPARAISO"
+        "c": 3005,
+        "d": "DE VALPARAISO"
     },
     {
-      "c": 3013,
-      "d": "METROPOLITANA DE SANTIAGO"
+        "c": 3013,
+        "d": "METROPOLITANA DE SANTIAGO"
     },
     {
-      "c": 3006,
-      "d": "DEL LIBERTADOR GENERAL BERNARDO O'HIGGINS"
+        "c": 3006,
+        "d": "DEL LIBERTADOR GENERAL BERNARDO O'HIGGINS"
     },
     {
-      "c": 3007,
-      "d": "DEL MAULE"
+        "c": 3007,
+        "d": "DEL MAULE"
     },
     {
-      "c": 3016,
-      "d": "DE ÑUBLE"
+        "c": 3016,
+        "d": "DE ÑUBLE"
     },
     {
-      "c": 3008,
-      "d": "DEL BIOBIO"
+        "c": 3008,
+        "d": "DEL BIOBIO"
     },
     {
-      "c": 3009,
-      "d": "DE LA ARAUCANIA"
+        "c": 3009,
+        "d": "DE LA ARAUCANIA"
     },
     {
-      "c": 3014,
-      "d": "DE LOS RIOS"
+        "c": 3014,
+        "d": "DE LOS RIOS"
     },
     {
-      "c": 3010,
-      "d": "DE LOS LAGOS"
+        "c": 3010,
+        "d": "DE LOS LAGOS"
     },
     {
-      "c": 3011,
-      "d": "DE AYSEN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO"
+        "c": 3011,
+        "d": "DE AYSEN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO"
     },
     {
-      "c": 3012,
-      "d": "DE MAGALLANES Y DE LA ANTARTICA CHILENA"
+        "c": 3012,
+        "d": "DE MAGALLANES Y DE LA ANTARTICA CHILENA"
     }
-  ]
+]
