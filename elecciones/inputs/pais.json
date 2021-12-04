@@ -1,0 +1,262 @@
+[
+    {
+        "c": 8000,
+        "d": "ALEMANIA"
+    },
+    {
+        "c": 8001,
+        "d": "ARGENTINA"
+    },
+    {
+        "c": 8002,
+        "d": "AUSTRALIA"
+    },
+    {
+        "c": 8003,
+        "d": "AUSTRIA"
+    },
+    {
+        "c": 8004,
+        "d": "BELGICA"
+    },
+    {
+        "c": 8005,
+        "d": "BOLIVIA"
+    },
+    {
+        "c": 8006,
+        "d": "BRASIL"
+    },
+    {
+        "c": 8007,
+        "d": "CANADA"
+    },
+    {
+        "c": 8008,
+        "d": "COLOMBIA"
+    },
+    {
+        "c": 8009,
+        "d": "COREA"
+    },
+    {
+        "c": 8010,
+        "d": "COSTA RICA"
+    },
+    {
+        "c": 8011,
+        "d": "CROACIA"
+    },
+    {
+        "c": 8012,
+        "d": "CUBA"
+    },
+    {
+        "c": 8013,
+        "d": "DINAMARCA"
+    },
+    {
+        "c": 8014,
+        "d": "ECUADOR"
+    },
+    {
+        "c": 8015,
+        "d": "EGIPTO"
+    },
+    {
+        "c": 8016,
+        "d": "EL LIBANO"
+    },
+    {
+        "c": 8017,
+        "d": "EL SALVADOR"
+    },
+    {
+        "c": 8018,
+        "d": "EMIRATOS ARABES UNIDOS"
+    },
+    {
+        "c": 8019,
+        "d": "ESPAÑA"
+    },
+    {
+        "c": 8020,
+        "d": "ESTADOS UNIDOS"
+    },
+    {
+        "c": 8021,
+        "d": "FEDERACION RUSA"
+    },
+    {
+        "c": 8022,
+        "d": "FILIPINAS"
+    },
+    {
+        "c": 8023,
+        "d": "FINLANDIA"
+    },
+    {
+        "c": 8024,
+        "d": "FRANCIA"
+    },
+    {
+        "c": 8025,
+        "d": "GRECIA"
+    },
+    {
+        "c": 8026,
+        "d": "GUATEMALA"
+    },
+    {
+        "c": 8027,
+        "d": "HAITI"
+    },
+    {
+        "c": 8028,
+        "d": "HONDURAS"
+    },
+    {
+        "c": 8029,
+        "d": "HUNGRIA"
+    },
+    {
+        "c": 8030,
+        "d": "INDIA"
+    },
+    {
+        "c": 8031,
+        "d": "INDONESIA"
+    },
+    {
+        "c": 8032,
+        "d": "IRLANDA"
+    },
+    {
+        "c": 8033,
+        "d": "ISRAEL"
+    },
+    {
+        "c": 8034,
+        "d": "ITALIA"
+    },
+    {
+        "c": 8035,
+        "d": "JAMAICA"
+    },
+    {
+        "c": 8036,
+        "d": "JAPON"
+    },
+    {
+        "c": 8037,
+        "d": "JORDANIA"
+    },
+    {
+        "c": 8038,
+        "d": "KENIA"
+    },
+    {
+        "c": 8039,
+        "d": "MALASIA"
+    },
+    {
+        "c": 8040,
+        "d": "MARRUECOS"
+    },
+    {
+        "c": 8041,
+        "d": "MEXICO"
+    },
+    {
+        "c": 8042,
+        "d": "NICARAGUA"
+    },
+    {
+        "c": 8043,
+        "d": "NORUEGA"
+    },
+    {
+        "c": 8044,
+        "d": "NUEVA ZELANDA"
+    },
+    {
+        "c": 8045,
+        "d": "PAISES BAJOS"
+    },
+    {
+        "c": 8046,
+        "d": "PANAMA"
+    },
+    {
+        "c": 8047,
+        "d": "PARAGUAY"
+    },
+    {
+        "c": 8048,
+        "d": "PERU"
+    },
+    {
+        "c": 8049,
+        "d": "POLONIA"
+    },
+    {
+        "c": 8050,
+        "d": "PORTUGAL"
+    },
+    {
+        "c": 8051,
+        "d": "REINO UNIDO"
+    },
+    {
+        "c": 8052,
+        "d": "REPUBLICA CHECA"
+    },
+    {
+        "c": 8053,
+        "d": "REPUBLICA DOMINICANA"
+    },
+    {
+        "c": 8054,
+        "d": "REPUBLICA POPULAR CHINA"
+    },
+    {
+        "c": 8055,
+        "d": "RUMANIA"
+    },
+    {
+        "c": 8057,
+        "d": "SINGAPUR"
+    },
+    {
+        "c": 8058,
+        "d": "SUDAFRICA"
+    },
+    {
+        "c": 8059,
+        "d": "SUECIA"
+    },
+    {
+        "c": 8060,
+        "d": "SUIZA"
+    },
+    {
+        "c": 8061,
+        "d": "TAILANDIA"
+    },
+    {
+        "c": 8062,
+        "d": "TURQUIA"
+    },
+    {
+        "c": 8063,
+        "d": "URUGUAY"
+    },
+    {
+        "c": 8064,
+        "d": "VENEZUELA"
+    },
+    {
+        "c": 8065,
+        "d": "VIETNAM"
+    }
+]
