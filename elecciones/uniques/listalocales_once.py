@@ -7,9 +7,6 @@ import csv
 from csv import DictWriter
 from csv import writer
 
-#com=open('elecciones/inputs/comunas.json',encoding='utf-8')
-#prov=open('elecciones/inputs/provincias.json',encoding='utf-8')
-#reg=open('elecciones/inputs/regiones.json',encoding='utf-8')
 ce=open('elecciones/inputs/circelectoral.json',encoding='utf-8')
 jce=json.load(ce)
 tabla=pd.DataFrame(columns=['circelec','nce','idservel','local','kei'])
@@ -17,6 +14,7 @@ tabla=pd.DataFrame(columns=['circelec','nce','idservel','local','kei'])
 for key in jce:
     k=key['c']
     d=key['d']
+    print(d)
     direccion="https://www.servelelecciones.cl/data/elecciones_presidente/filters/locales/bycirc_electoral/{}.json".format(k)
     payload={}
     headers = {}
@@ -29,6 +27,5 @@ for key in jce:
         fila={'circelec':k,'nce':d,'idservel':a,'local':b,'kei':j}
         tabla=tabla.append(fila,ignore_index=True)
 
-#tabla.to_csv(path_or_buf='elecciones/outputs/localesservel.csv',index=False,encoding='utf-8')
-tabla.to_json(path_or_buf='elecciones/outputs/localesservel.json',orient='records')
+tabla.to_json(path_or_buf='elecciones/inputs/localesservel.json',orient='records')
 ce.close()

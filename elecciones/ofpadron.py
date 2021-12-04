@@ -34,15 +34,13 @@ def GetGlobalPadron():
 def GetTerritorialPadron(divterritorial):
     print('Analizando: '+divterritorial)
     dt=datetime.now()
-    tabla=pd.DataFrame(columns=['ts','padron','vt1v','c1v'])
+    tabla=pd.DataFrame(columns=['ts','idservel','padron','vt1v','c1v'])
     fn='elecciones/inputs/{}.json'.format(divterritorial)
     loc=open(fn,encoding='utf-8')
     jloc=json.load(loc)
     for key in jloc:  
         b=key['c']
-        if divterritorial=='regiones':
-            terurl="https://www.servelelecciones.cl/data/participacion/computo/{}/{}.json".format(divterritorial,b)
-        else: terurl="https://www.servelelecciones.cl/data/participacion/computo/{}/{}.json".format(divterritorial,b)
+        terurl="https://www.servelelecciones.cl/data/participacion/computo/{}/{}.json".format(divterritorial,b)
         response = requests.request("GET", terurl, headers={}, data={})
         r=json.loads(response.text)
         ts=dt
@@ -53,6 +51,7 @@ def GetTerritorialPadron(divterritorial):
         else: c1v=0
         fila={
             'ts':ts,
+            'idservel':b,
             'padron':padron,
             'vt1v':vt1v,
             'c1v':c1v
@@ -61,6 +60,7 @@ def GetTerritorialPadron(divterritorial):
         tabla=tabla.append(fila,ignore_index=True)
         outfn='elecciones/outputs/representacion/{}.csv'.format(divterritorial)
         tabla.to_csv(path_or_buf=outfn,index=False,encoding='utf-8')
+    print('Finalizado: '+divterritorial)
     loc.close()
 
 if __name__ == '__main__':

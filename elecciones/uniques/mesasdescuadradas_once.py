@@ -9,7 +9,6 @@ import arcgis
 reg=open("elecciones/inputs/mesas_cl.json")
 jreg=json.load(reg)
 tablamesa=pd.DataFrame(columns=['cloc','cmesa','mesa','c1','c2','c3','c4','c5','c6','c7','vv','vn','vb','vtc','vts','w1V','obs'])
-#tablalocal=pd.DataFrame(columns=['cloc','local','c1','c2','c3','c4','c5','c6','c7','vv','vn','vb','vt','me','tm','cm','w1V'])
 for mesa in jreg:
     val=mesa['md']
     if val:    
