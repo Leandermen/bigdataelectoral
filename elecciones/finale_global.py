@@ -68,7 +68,10 @@ if __name__ == '__main__':
     print('Computo Global en Progreso')
     gis = GIS("https://www.arcgis.com", 'soportaltda', 'Mhilo.2016')
     ItemSource=gis.content.get('d82682aef8f440deb1a35129502ae5a7')
+    ItemTS=gis.content.get('39107a24dd2847b2b3c41f1fe594c354')
+    ttsnation=ItemTS.tables[0]
     tnation=ItemSource.tables[0]
     arreglo=GlobalNational(tnation)
     tnation.edit_features(updates=[arreglo])
+    ttsnation.edit_features(adds=[arreglo])
     print("listo")
