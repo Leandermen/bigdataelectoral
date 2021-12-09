@@ -18,18 +18,22 @@ provchl=ItemSource.layers[4]
 regichl=ItemSource.layers[5]
 mainnational=ItemSource.tables[0]
 
-#datalocal=localchl.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
-#datalocal.to_json(path_or_buf='elecciones/testing/oidlocales.json',orient='records')
+datalocal=localext.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
+datalocal.to_json(path_or_buf='elecciones/testing/oidlocalext.json',orient='records')
 
-c11v=123
-c21v=100
+datalocal=localchl.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
+datalocal.to_json(path_or_buf='elecciones/testing/oidlocales.json',orient='records')
+
+datalocal=paisext.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
+datalocal.to_json(path_or_buf='elecciones/testing/oidpaises.json',orient='records')
+
+datalocal=regichl.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
+datalocal.to_json(path_or_buf='elecciones/testing/oidregiones.json',orient='records')
+
+datalocal=provchl.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
+datalocal.to_json(path_or_buf='elecciones/testing/oidprovincias.json',orient='records')
+
+datalocal=comuchl.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
+datalocal.to_json(path_or_buf='elecciones/testing/oidcomunas.json',orient='records')
 
 
-
-qreg=regichl.query(out_fields='objectid,c11v,c21v',return_geometry='false')
-featureV2=[f for f in qreg]
-
-for ft in featureV2:
-    ft.attributes['c11v']=c11v
-    ft.attributes['c21v']=c21v
-    regichl.edit_features(updates=[ft])

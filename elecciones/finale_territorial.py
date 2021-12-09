@@ -1,6 +1,8 @@
 import requests
 import json
+import pandas as pd
 import time
+from multiprocessing import Pool
 import datetime
 from arcgis.gis import GIS
 from arcgis.features import GeoAccessor, GeoSeriesAccessor
