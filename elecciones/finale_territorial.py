@@ -9,7 +9,10 @@ from arcgis.features import GeoAccessor, GeoSeriesAccessor
 from datetime import datetime
 
 #Global
-def GlobalNational(mainnational):
+def GlobalNational(tercore):
+    fcoid=tercore[0]
+    idservel=tercore[1]
+    ambito=tercore[2]
     #Timestamps
     dt=datetime.now()
     #Obtención de Jsons
