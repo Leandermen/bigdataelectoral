@@ -11,11 +11,9 @@ from datetime import datetime
 gis = GIS("https://www.arcgis.com", 'soportaltda', 'Mhilo.2016')
 ItemSource=gis.content.get('d82682aef8f440deb1a35129502ae5a7')
 #ItemTS=gis.content.get('39107a24dd2847b2b3c41f1fe594c354')
-paisext=ItemSource.layers[2]
-comuchl=ItemSource.layers[3]
-provchl=ItemSource.layers[4]
-regichl=ItemSource.layers[5]
-layergroup={'pais':paisext,'regiones':regichl,'provincias':provchl,'comunas':comuchl}
+lext=ItemSource.layers[0]
+lchl=ItemSource.layers[1]
+layergroup={'nacional':lchl,'extranjero':lext}
 
 def obtenerservicio(ambito):
     return layergroup[ambito]
@@ -23,10 +21,12 @@ def obtenerservicio(ambito):
 def clasificador(json,territorio):
     inarray=[]
     for record in json:
-        if record['amb']==territorio:        
+        if record['amb']==territorio:
             inoid=record['oid']
             inids=record['ids']
-            ter=territorio
+            if record['ext']:        
+                ter='extranjero'
+            else: ter='nacional'
             subarray=[inoid,inids,ter]
             inarray.append(subarray)
         else: pass
@@ -39,9 +39,9 @@ def Territorial(tercore):
     #Timestamps
     dt=datetime.now()
     #Obtención de Jsons
-    resultados="https://www.servelelecciones.cl/data/elecciones_presidente/computo/{}/{}.json".format(ambito,idservel)
-    mesas="https://www.servelelecciones.cl/data/mesas_instaladas/computo/{}/{}.json".format(ambito,idservel)
-    padron="https://www.servelelecciones.cl/data/participacion/computo/{}/{}.json".format(ambito,idservel)
+    resultados="https://www.servelelecciones.cl/data/elecciones_presidente/computo/locales/{}.json".format(idservel)
+    mesas="https://www.servelelecciones.cl/data/mesas_instaladas/computo/locales/{}.json".format(idservel)
+    padron="https://www.servelelecciones.cl/data/participacion/computo/locales/{}.json".format(idservel)
     rresults = requests.request("GET", resultados, headers={}, data={})
     jresults=json.loads(rresults.text)
     rmesas = requests.request("GET", mesas, headers={}, data={})
@@ -49,7 +49,7 @@ def Territorial(tercore):
     rpadron = requests.request("GET", padron, headers={}, data={})
     jpadron=json.loads(rpadron.text)
     servicio=obtenerservicio(ambito)
-    qnation=servicio.query(out_fields='*',return_geometry=False,object_ids=fcoid)
+    qnation=servicio.query(out_fields='ts,c11v,c21v,c31v,c41v,c51v,c61v,c71v,vv1v,vn1v,vb1v,vt1v,eM1v,tM1v,cM1v,w1V,iM1v,pM1v,tPad,cv1v,c12v,c22v,vv2v,vn2v,vb2v,vt2v,iM2v,pM2v,tM2v,cM2v,w2v,cv2v',return_geometry=False,object_ids=fcoid)
     modregister=[f for f in qnation][0]
     modregister.attributes['ts']=dt
     #Resultados 1V
@@ -73,9 +73,14 @@ def Territorial(tercore):
     modregister.attributes['vb1v']=int(jresults['resumen'][2]['c'].replace(".",""))    
     modregister.attributes['vt1v']=modregister.attributes['vv1v']+modregister.attributes['vn1v']+modregister.attributes['vb1v']
     #Mesas    
-    modregister.attributes['tM1v']=int(jmesas['resumen'][0]['b'].replace(".",""))
-    modregister.attributes['iM1v']=int(jmesas['resumen'][0]['c'].replace(".",""))
-    modregister.attributes['pM1v']=int(jmesas['resumen'][0]['d'].replace(".",""))
+    modregister.attributes['tM1v']=0
+    modregister.attributes['iM1v']=0
+    modregister.attributes['pM1v']=0
+    for mesa in jmesas['data']:
+        modregister.attributes['tM1v']=modregister.attributes['tM1v']+1
+        if mesa['b']=="Instalada":
+            modregister.attributes['iM1v']=modregister.attributes['iM1v']+1
+        else: modregister.attributes['pM1v']=modregister.attributes['pM1v']+1
     modregister.attributes['eM1v']=int(jresults['mesasEscrutadas'].replace(".",""))
     if modregister.attributes['tM1v'] != 0:
         modregister.attributes['cM1v']=round((modregister.attributes['iM1v']/modregister.attributes['tM1v'])*100,3)
@@ -85,7 +90,7 @@ def Territorial(tercore):
     if modregister.attributes['tPad'] != 0:
         modregister.attributes['cv1v']=round((modregister.attributes['vt1v']/modregister.attributes['tPad'])*100,3)
     else: modregister.attributes['cv1v']=0
-    #print("Preparado "+str(idservel))
+    print("Preparado "+str(idservel))
     servicio.edit_features(updates=[modregister])
     
     
@@ -93,17 +98,8 @@ if __name__ == '__main__':
     print('Inicio de Edición')
     keyindex=open('elecciones/inputs/codigosfs.json')
     jkey=json.load(keyindex)
-    paisinput=clasificador(jkey,'pais')
-    reginput=clasificador(jkey,'regiones')
-    proinput=clasificador(jkey,'provincias')
-    cominput=clasificador(jkey,'comunas')
+    locservel=clasificador(jkey,'locales')
     with Pool(3) as p:
-        print('Analizando Paises')
-        p.map(Territorial,paisinput)
-        print('Analizando Regiones')
-        p.map(Territorial,reginput)
-        print('Analizando Provincias')
-        p.map(Territorial,proinput)
-        print('Analizando Comunas')
-        p.map(Territorial,cominput)
+        print('Analizando Locales')
+        p.map(Territorial,locservel)
     print("listo")

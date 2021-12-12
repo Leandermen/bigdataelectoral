@@ -16,7 +16,7 @@ paisext=ItemSource.layers[2]
 comuchl=ItemSource.layers[3]
 provchl=ItemSource.layers[4]
 regichl=ItemSource.layers[5]
-mainnational=ItemSource.tables[0]
+#mainnational=ItemSource.tables[0]
 
 datalocal=localext.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
 datalocal.to_json(path_or_buf='elecciones/testing/oidlocalext.json',orient='records')

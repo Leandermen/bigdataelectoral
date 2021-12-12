@@ -1,7 +1,7 @@
 import json
 import pandas as pd
 
-tabla=pd.DataFrame(columns=['oid','ids','amb'])
+tabla=pd.DataFrame(columns=['oid','ids','amb','ext'])
 
 pai=open('elecciones/testing/oidpaises.json')
 reg=open('elecciones/testing/oidregiones.json')
@@ -21,7 +21,8 @@ for a in jpai:
     fila={
         'oid':a['OBJECTID'],
         'ids':a['idservel'],
-        'amb':'pais'
+        'amb':'pais',
+        'ext':False
     }
     tabla=tabla.append(fila,ignore_index=True)
 
@@ -29,7 +30,8 @@ for a in jreg:
     fila={
         'oid':a['OBJECTID'],
         'ids':a['idservel'],
-        'amb':'regiones'
+        'amb':'regiones',
+        'ext':False
     }
     tabla=tabla.append(fila,ignore_index=True)
 
@@ -37,7 +39,8 @@ for a in jpro:
     fila={
         'oid':a['OBJECTID'],
         'ids':a['idservel'],
-        'amb':'provincias'
+        'amb':'provincias',
+        'ext':False
     }
     tabla=tabla.append(fila,ignore_index=True)
 
@@ -45,7 +48,8 @@ for a in jcom:
     fila={
         'oid':a['OBJECTID'],
         'ids':a['idservel'],
-        'amb':'comunas'
+        'amb':'comunas',
+        'ext':False
     }
     tabla=tabla.append(fila,ignore_index=True)
 
@@ -53,7 +57,8 @@ for a in jlch:
     fila={
         'oid':a['OBJECTID'],
         'ids':a['idservel'],
-        'amb':'locales'
+        'amb':'locales',
+        'ext':False
     }
     tabla=tabla.append(fila,ignore_index=True)
 
@@ -61,7 +66,8 @@ for a in jlex:
     fila={
         'oid':a['OBJECTID'],
         'ids':a['idservel'],
-        'amb':'locales'
+        'amb':'locales',
+        'ext':True
     }
     tabla=tabla.append(fila,ignore_index=True)
 
