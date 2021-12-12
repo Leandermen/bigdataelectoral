@@ -20,13 +20,13 @@ layergroup={'pais':paisext,'regiones':regichl,'provincias':provchl,'comunas':com
 def obtenerservicio(ambito):
     return layergroup[ambito]
 
-def clasificador(json,territorio):
+def clasificador(json):
     inarray=[]
     for record in json:
-        if record['amb']==territorio:        
+        if record['amb']!='locales':        
             inoid=record['oid']
             inids=record['ids']
-            ter=territorio
+            ter=record['amb']
             subarray=[inoid,inids,ter]
             inarray.append(subarray)
         else: pass
@@ -93,17 +93,8 @@ if __name__ == '__main__':
     print('Inicio de Edición')
     keyindex=open('elecciones/inputs/codigosfs.json')
     jkey=json.load(keyindex)
-    paisinput=clasificador(jkey,'pais')
-    reginput=clasificador(jkey,'regiones')
-    proinput=clasificador(jkey,'provincias')
-    cominput=clasificador(jkey,'comunas')
+    terinput=clasificador(jkey)
     with Pool(3) as p:
-        print('Analizando Paises')
-        p.map(Territorial,paisinput)
-        print('Analizando Regiones')
-        p.map(Territorial,reginput)
-        print('Analizando Provincias')
-        p.map(Territorial,proinput)
-        print('Analizando Comunas')
-        p.map(Territorial,cominput)
+        print('Analizando Territorios')
+        p.map(Territorial,terinput)
     print("listo")
