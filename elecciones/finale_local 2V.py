@@ -85,14 +85,19 @@ def Territorial(tercore):
     
 if __name__ == '__main__':
     print('Inicio de Edición')
+    stime=datetime.now()
     keyindex=open('elecciones/inputs/codigosfs.json')
     jkey=json.load(keyindex)
     locservel=clasificador(jkey,'locales')
-    for local in locservel:
-        Territorial(local)
+    #for local in locservel:
+    #    Territorial(local)
     
     
-    #with Pool(3) as p:
-    #    print('Analizando Locales')
-    #    p.map(Territorial,locservel)
+    with Pool(24) as p:
+        print('Analizando Locales')
+        p.map(Territorial,locservel)
+    etime=datetime.now()
+    timedelta=etime-stime
+    mins=str(round(timedelta.total_seconds()/60,3))
+    print('Tiempo Elapsado: '+mins+' minutos')
     print("listo")

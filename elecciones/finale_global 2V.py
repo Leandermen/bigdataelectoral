@@ -49,8 +49,8 @@ def GlobalNational(mainnational):
     
     
 if __name__ == '__main__':
-    #UTerritorial=['regiones','provincias','comunas','pais']
     print('Computo Global en Progreso')
+    stime=datetime.now()
     gis = GIS("https://www.arcgis.com", 'soportaltda', 'Mhilo.2016')
     ItemSource=gis.content.get('d82682aef8f440deb1a35129502ae5a7')
     ItemTS=gis.content.get('39107a24dd2847b2b3c41f1fe594c354')
@@ -59,4 +59,8 @@ if __name__ == '__main__':
     arreglo=GlobalNational(tnation)
     tnation.edit_features(updates=[arreglo])
     ttsnation.edit_features(adds=[arreglo])
+    etime=datetime.now()
+    timedelta=etime-stime
+    mins=str(round(timedelta.total_seconds()/60,3))
+    print('Tiempo Elapsado: '+mins+' minutos')
     print("listo")
