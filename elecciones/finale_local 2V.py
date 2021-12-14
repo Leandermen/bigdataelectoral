@@ -88,7 +88,11 @@ if __name__ == '__main__':
     keyindex=open('elecciones/inputs/codigosfs.json')
     jkey=json.load(keyindex)
     locservel=clasificador(jkey,'locales')
-    with Pool(3) as p:
-        print('Analizando Locales')
-        p.map(Territorial,locservel)
+    for local in locservel:
+        Territorial(local)
+    
+    
+    #with Pool(3) as p:
+    #    print('Analizando Locales')
+    #    p.map(Territorial,locservel)
     print("listo")
