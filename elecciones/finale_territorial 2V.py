@@ -83,7 +83,7 @@ if __name__ == '__main__':
     keyindex=open('elecciones/inputs/codigosfs.json')
     jkey=json.load(keyindex)
     terinput=clasificador(jkey)
-    with Pool(24) as p:
+    with Pool(8) as p:
         print('Analizando Territorios')
         p.map(Territorial,terinput)
     etime=datetime.now()

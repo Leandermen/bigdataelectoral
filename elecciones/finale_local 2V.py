@@ -90,7 +90,7 @@ if __name__ == '__main__':
     locservel=clasificador(jkey,'locales')
     #for local in locservel:
     #    Territorial(local)  
-    with Pool(24) as p:
+    with Pool(8) as p:
         print('Analizando Locales')
         p.map(Territorial,locservel)
     etime=datetime.now()
