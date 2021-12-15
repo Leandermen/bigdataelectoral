@@ -1,6 +1,5 @@
 import requests
 import json
-import pandas as pd
 import time
 from multiprocessing import Pool
 import datetime

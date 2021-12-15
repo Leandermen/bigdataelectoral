@@ -1,6 +1,5 @@
 import requests
 import json
-import pandas as pd
 import time
 from multiprocessing import Pool
 import datetime
@@ -90,9 +89,7 @@ if __name__ == '__main__':
     jkey=json.load(keyindex)
     locservel=clasificador(jkey,'locales')
     #for local in locservel:
-    #    Territorial(local)
-    
-    
+    #    Territorial(local)  
     with Pool(24) as p:
         print('Analizando Locales')
         p.map(Territorial,locservel)
