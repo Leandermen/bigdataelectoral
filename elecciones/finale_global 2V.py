@@ -36,7 +36,7 @@ def GlobalNational(mainnational):
     modregister.attributes['tM2v']=int(jmesas['resumen'][0]['b'].replace(".",""))
     modregister.attributes['iM2v']=int(jmesas['resumen'][0]['c'].replace(".",""))
     modregister.attributes['pM2v']=int(jmesas['resumen'][0]['d'].replace(".",""))
-    modregister.attributes['eM2v']=int(jresults['mesasEscrutadas'].replace(".",""))
+    
     if modregister.attributes['tM2v'] != 0:
         modregister.attributes['cM2v']=round((modregister.attributes['iM2v']/modregister.attributes['tM2v'])*100,3)
     else: modregister.attributes['cM2v']=0
