@@ -9,10 +9,11 @@ from datetime import datetime
 
 gis = GIS("https://www.arcgis.com", 'soportaltda', 'Mhilo.2016')
 ItemSource=gis.content.get('d82682aef8f440deb1a35129502ae5a7')
-#ItemTS=gis.content.get('39107a24dd2847b2b3c41f1fe594c354')
+ItemTS=gis.content.get('39107a24dd2847b2b3c41f1fe594c354')
 lext=ItemSource.layers[0]
 lchl=ItemSource.layers[1]
 layergroup={'nacional':lchl,'extranjero':lext}
+
 
 def obtenerservicio(ambito):
     return layergroup[ambito]
@@ -80,6 +81,7 @@ def Territorial(tercore):
     else: modregister.attributes['cv2v']=0
     print("Preparado "+str(idservel))
     servicio.edit_features(updates=[modregister])
+    time.sleep(0.2)
     
     
 if __name__ == '__main__':
@@ -90,7 +92,7 @@ if __name__ == '__main__':
     locservel=clasificador(jkey,'locales')
     #for local in locservel:
     #    Territorial(local)  
-    with Pool(8) as p:
+    with Pool(4) as p:
         print('Analizando Locales')
         p.map(Territorial,locservel)
     etime=datetime.now()

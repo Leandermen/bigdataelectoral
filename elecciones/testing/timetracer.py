@@ -90,6 +90,8 @@ def Territorial(tercore):
     print("Preparado "+str(idservel))
     servicio.edit_features(updates=[modregister])
     timetable.edit_features(adds=[modregister])
+    time.sleep(0.2)
+
 
 def CheckNovedad(url):
     response = requests.request("GET", masterurl, headers={}, data={})
@@ -106,7 +108,7 @@ if __name__ == '__main__':
         if update!=dato:
             stime=datetime.now()
             GlobalNational(tnation)
-            with Pool(6) as p:
+            with Pool(4) as p:
                 p.map(Territorial,terinput)
             dato=update
             etime=datetime.now()
