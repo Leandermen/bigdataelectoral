@@ -9,7 +9,9 @@ from arcgis.features import GeoAccessor, GeoSeriesAccessor
 from datetime import datetime
 
 masterurl="https://www.servelelecciones.cl/data/elecciones_presidente/computo/global/19001.json"
-dato=1
+cr = requests.request("GET", masterurl, headers={}, data={})
+jr=json.loads(cr.text)
+dato=int(jr['mesasEscrutadas'].replace(".",""))
 update=0
 
 gis = GIS("https://www.arcgis.com", 'soportaltda', 'Mhilo.2016')
@@ -124,6 +126,7 @@ def Territorial(tercore):
     print("Preparado Territorio: "+str(idservel))
     servicio.edit_features(updates=[modregister])
     timetable.edit_features(adds=[modregister])
+    time.sleep(0.1)
 
 def CheckNovedad(url):
     response = requests.request("GET", masterurl, headers={}, data={})
@@ -137,15 +140,16 @@ if __name__ == '__main__':
     terinput=clasificador(jkey)
     while True:
         update=CheckNovedad(masterurl)
+        ctime=datetime.now()
         if update!=dato:
             stime=datetime.now()
             GlobalNational(tnation)
-            with Pool(6) as p:
+            with Pool(4) as p:
                 p.map(Territorial,terinput)
             dato=update
             etime=datetime.now()
             timedelta=etime-stime
             mins=str(round(timedelta.total_seconds()/60,3))
             print('Tiempo Elapsado: '+mins+' minutos')
-        else: print ("Todo Igual")
+        else: print ("Todo Igual "+ctime.strftime("%H:%M:%S"))
         time.sleep(5)
