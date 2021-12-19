@@ -12,6 +12,7 @@ ItemSource=gis.content.get('d82682aef8f440deb1a35129502ae5a7')
 ItemTS=gis.content.get('39107a24dd2847b2b3c41f1fe594c354')
 lext=ItemSource.layers[0]
 lchl=ItemSource.layers[1]
+ttslocal=ItemTS.tables[3]
 layergroup={'nacional':lchl,'extranjero':lext}
 
 
@@ -79,9 +80,12 @@ def Territorial(tercore):
     if modregister.attributes['tPad'] != 0:
         modregister.attributes['cv2v']=round((modregister.attributes['vt2v']/modregister.attributes['tPad'])*100,3)
     else: modregister.attributes['cv2v']=0
+    if ambito=='nacional':
+        modregister.attributes['mex']=False
+    else: modregister.attributes['mex']=True
     print("Preparado "+str(idservel))
     servicio.edit_features(updates=[modregister])
-    time.sleep(0.2)
+    time.sleep(0.1)
     
     
 if __name__ == '__main__':
