@@ -1,8 +1,8 @@
-import requests
-import json
 import pandas as pd
 from arcgis.gis import GIS
 
+evento='pleb2022'
+folder='lookups'
 
 gis = GIS("https://www.arcgis.com", 'soportaltda', 'Mhilo.2016')
 ItemSource=gis.content.get('d82682aef8f440deb1a35129502ae5a7')
@@ -16,21 +16,19 @@ regichl=ItemSource.layers[5]
 #mainnational=ItemSource.tables[0]
 
 datalocal=localext.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
-datalocal.to_json(path_or_buf='elecciones/testing/oidlocalext.json',orient='records')
+datalocal.to_json(path_or_buf='{}/{}/oidlocalext.json'.format(evento,folder),orient='records')
 
 datalocal=localchl.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
-datalocal.to_json(path_or_buf='elecciones/testing/oidlocales.json',orient='records')
+datalocal.to_json(path_or_buf='{}/{}/oidlocales.json'.format(evento,folder),orient='records')
 
 datalocal=paisext.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
-datalocal.to_json(path_or_buf='elecciones/testing/oidpaises.json',orient='records')
+datalocal.to_json(path_or_buf='{}/{}/oidpaises.json'.format(evento,folder),orient='records')
 
 datalocal=regichl.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
-datalocal.to_json(path_or_buf='elecciones/testing/oidregiones.json',orient='records')
+datalocal.to_json(path_or_buf='{}/{}/oidregiones.json'.format(evento,folder),orient='records')
 
 datalocal=provchl.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
-datalocal.to_json(path_or_buf='elecciones/testing/oidprovincias.json',orient='records')
+datalocal.to_json(path_or_buf='{}/{}/oidprovincias.json'.format(evento,folder),orient='records')
 
 datalocal=comuchl.query(out_fields='objectid,idservel',return_geometry='false',as_df=True)
-datalocal.to_json(path_or_buf='elecciones/testing/oidcomunas.json',orient='records')
-
-
+datalocal.to_json(path_or_buf='{}/{}/oidcomunas.json'.format(evento,folder),orient='records')
