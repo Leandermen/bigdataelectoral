@@ -43,5 +43,5 @@ for cont in jce:
                 fila={'c_cont':c,'c_pais':p,'c_circ':l,'n_circ':ld,'idservel':idservel,'local':puesto}
                 tabla=tabla.append(fila,ignore_index=True)
 
-tabla.to_json(path_or_buf='{}/{}/localesext.json'.format(evento,folder),orient='records')
+tabla.to_json(path_or_buf='{}/{}/localesext.json'.format(evento,folder),orient='records',force_ascii=False)
 ce.close()

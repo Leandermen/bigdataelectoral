@@ -31,5 +31,5 @@ for key in jce:
         fila={'circelec':k,'nce':d,'idservel':a,'local':b,'kei':j}
         tabla=tabla.append(fila,ignore_index=True)
 
-tabla.to_json(path_or_buf='{}/{}/localesservel.json'.format(evento,folder),orient='records')
+tabla.to_json(path_or_buf='{}/{}/localesservel.json'.format(evento,folder),orient='records',force_ascii=False)
 ce.close()
