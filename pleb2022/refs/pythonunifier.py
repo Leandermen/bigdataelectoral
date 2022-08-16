@@ -1,14 +1,17 @@
 import json
 import pandas as pd
 
+evento='pleb2022'
+folder='lookups'
+
 tabla=pd.DataFrame(columns=['oid','ids','amb','ext'])
 
-pai=open('elecciones/testing/oidpaises.json')
-reg=open('elecciones/testing/oidregiones.json')
-pro=open('elecciones/testing/oidprovincias.json')
-com=open('elecciones/testing/oidcomunas.json')
-lch=open('elecciones/testing/oidlocales.json')
-lex=open('elecciones/testing/oidlocalext.json')
+pai=open('{}/{}/oidpaises.json'.format(evento,folder))
+reg=open('{}/{}/oidregiones.json'.format(evento,folder))
+pro=open('{}/{}/oidprovincias.json'.format(evento,folder))
+com=open('{}/{}/oidcomunas.json'.format(evento,folder))
+lch=open('{}/{}/oidlocales.json'.format(evento,folder))
+lex=open('{}/{}/oidlocalext.json'.format(evento,folder))
 
 jpai=json.load(pai)
 jreg=json.load(reg)
@@ -71,7 +74,7 @@ for a in jlex:
     }
     tabla=tabla.append(fila,ignore_index=True)
 
-tabla.to_json(path_or_buf='elecciones/inputs/codigosfs.json',orient='records')
+tabla.to_json(path_or_buf='{}/{}/codigosfs.json'.format(evento,folder),orient='records')
 pai.close()
 reg.close()
 pro.close()
