@@ -1,4 +1,4 @@
-#Fase 1: Instalación de Mesas
+#Fase 1: Constitución de Mesas (3 de septiembre)
 import requests
 import json
 import time
