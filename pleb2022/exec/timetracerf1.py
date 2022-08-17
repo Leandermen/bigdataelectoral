@@ -120,31 +120,21 @@ def Territorial(tercore):
     dt=datetime.now()
     #Obtención de Jsons
     mesas="https://www.servelelecciones.cl/data/{}/computo/{}/{}.json".format(event_context,ambito,idservel)
-    # rmesas = requests.request("GET", mesas, headers={}, data={})
-    #jmesas=json.loads(rmesas.text)
     jmesas=sessioncrawler(mesas)
     etime1=datetime.now()
     timedelta1=etime1-dt
     mark1=str(round(timedelta1.total_seconds(),3))
-    #servicio=obtenerservicio(ambito,0)
-    #timetable=obtenerservicio(ambito,1)
     qnation=obtenerquery(ambito)
     modregister=[f for f in qnation if f.attributes['OBJECTID']==fcoid][0]
     modregister.attributes['ts']=dt
     #Mesas    
     modregister.attributes['cM']=int(jmesas['resumen'][0]['c'].replace(".",""))
     modregister.attributes['dcM']=modregister.attributes['mesas']-int(jmesas['resumen'][0]['c'].replace(".",""))
-    
-    #servicio.edit_features(updates=[modregister])
-    #timetable.edit_features(adds=[modregister])
     asignador(modregister,ambito)
     etime3=datetime.now()
     timedelta3=etime3-dt
     mark3=str(round(timedelta3.total_seconds(),3))
     print("Preparado "+str(idservel)+" jsontime:"+mark1+" edits:"+mark3)
-      
-    
-    #time.sleep(0.2)
 
 
 def CheckNovedad(url):
