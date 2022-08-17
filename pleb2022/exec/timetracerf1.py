@@ -86,9 +86,8 @@ def Territorial(tercore):
     modregister=[f for f in qnation][0]
     modregister.attributes['ts']=dt
     #Mesas    
-    modregister.attributes['tM2v']=int(jmesas['resumen'][0]['b'].replace(".",""))
-    modregister.attributes['iM2v']=int(jmesas['resumen'][0]['c'].replace(".",""))
-    modregister.attributes['pM2v']=int(jmesas['resumen'][0]['d'].replace(".",""))
+    modregister.attributes['cM']=int(jmesas['resumen'][0]['c'].replace(".",""))
+    modregister.attributes['dcM']=modregister.attributes['mesas']-int(jmesas['resumen'][0]['c'].replace(".",""))
     print("Preparado "+str(idservel))
     servicio.edit_features(updates=[modregister])
     timetable.edit_features(adds=[modregister])
@@ -110,8 +109,8 @@ if __name__ == '__main__':
         if update!=dato:
             stime=datetime.now()
             GlobalNational(tnation)
-            #with Pool(4) as p:
-            #    p.map(Territorial,terinput)
+            with Pool(3) as p:
+                p.map(Territorial,terinput)
             dato=update
             etime=datetime.now()
             timedelta=etime-stime
