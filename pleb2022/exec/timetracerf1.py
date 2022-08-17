@@ -79,8 +79,6 @@ def asignador(dato,ambito):
     elif ambito == 'comunas':
         td.append(dato)
 
-
-
 def clasificador(json):
     inarray=[]
     for record in json:
@@ -153,9 +151,6 @@ if __name__ == '__main__':
         if update!=dato:
             stime=datetime.now()
             GlobalNational(tnation)
-            #with Pool(3) as p:
-            #    print("Multipool Iniciado")
-            #    p.map(Territorial,terinput)
             for dato in terinput:
                 modificacion=Territorial(dato)
             dato=update
