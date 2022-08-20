@@ -42,12 +42,12 @@ extlocal=ItemSource.layers[1]
 naclocal=ItemSource.layers[0]
 
 print("Inicio Consultas")
-qpext=paisext.query(out_fields='*',return_geometry=False)
-qcomu=comuchl.query(out_fields='*',return_geometry=False)
-qprov=provchl.query(out_fields='*',return_geometry=False)
-qregi=regichl.query(out_fields='*',return_geometry=False)
-qlocn=naclocal.query(out_fields='*',return_geometry=False)
-qloce=extlocal.query(out_fields='*',return_geometry=False)
+qpext=paisext.query(out_fields='OBJECTID,mesas,ts,cM,dcM',return_geometry=False)
+qcomu=comuchl.query(out_fields='OBJECTID,mesas,ts,cM,dcM',return_geometry=False)
+qprov=provchl.query(out_fields='OBJECTID,mesas,ts,cM,dcM',return_geometry=False)
+qregi=regichl.query(out_fields='OBJECTID,mesas,ts,cM,dcM',return_geometry=False)
+qlocn=naclocal.query(out_fields='OBJECTID,mesas,ts,cM,dcM',return_geometry=False)
+qloce=extlocal.query(out_fields='OBJECTID,mesas,ts,cM,dcM',return_geometry=False)
 #e extranjero | f nacional
 ta,tb,tc,td,te,tf=[],[],[],[],[],[]
 layergroup={'pais':paisext,'regiones':regichl,'provincias':provchl,'comunas':comuchl}
@@ -157,9 +157,9 @@ def Territorial(tercore):
     #Obtención de Jsons
     mesas="https://www.servelelecciones.cl/data/{}/computo/{}/{}.json".format(event_context,ambito,idservel)
     jmesas=sessioncrawler(mesas)
-    etime1=datetime.now()
-    timedelta1=etime1-dt
-    mark1=str(round(timedelta1.total_seconds(),3))
+    # etime1=datetime.now()
+    # timedelta1=etime1-dt
+    # mark1=str(round(timedelta1.total_seconds(),3))
     qnation=obtenerquery(ambito)
     modregister=[f for f in qnation if f.attributes['OBJECTID']==fcoid][0]
     modregister.attributes['ts']=dt
@@ -167,10 +167,10 @@ def Territorial(tercore):
     modregister.attributes['cM']=int(jmesas['resumen'][0]['c'].replace(".",""))
     modregister.attributes['dcM']=modregister.attributes['mesas']-int(jmesas['resumen'][0]['c'].replace(".",""))
     asignador(modregister,ambito,False)
-    etime3=datetime.now()
-    timedelta3=etime3-dt
-    mark3=str(round(timedelta3.total_seconds(),3))
-    print("Preparado "+str(idservel)+" jsontime:"+mark1+" edits:"+mark3)
+    # etime3=datetime.now()
+    # timedelta3=etime3-dt
+    # mark3=str(round(timedelta3.total_seconds(),3))
+    # print("Preparado "+str(idservel)+" jsontime:"+mark1+" edits:"+mark3)
 
 def Local(localcore):
     fcoid=localcore[0]
@@ -182,9 +182,9 @@ def Local(localcore):
     #Obtención de Jsons
     mesas="https://www.servelelecciones.cl/data/{}/computo/{}/{}.json".format(event_context,ambito,idservel)
     jmesas=sessioncrawler(mesas)
-    etime1=datetime.now()
-    timedelta1=etime1-dt
-    mark1=str(round(timedelta1.total_seconds(),3))
+    # etime1=datetime.now()
+    # timedelta1=etime1-dt
+    # mark1=str(round(timedelta1.total_seconds(),3))
     qnation=obtenerqueryext(indext)
     modregister=[f for f in qnation if f.attributes['OBJECTID']==fcoid][0]
     modregister.attributes['ts']=dt
@@ -198,10 +198,10 @@ def Local(localcore):
     modregister.attributes['cM']=mc
     modregister.attributes['dcM']=mnc
     asignador(modregister,ambito,indext)
-    etime3=datetime.now()
-    timedelta3=etime3-dt
-    mark3=str(round(timedelta3.total_seconds(),3))
-    print("Preparado "+str(idservel)+" jsontime:"+mark1+" edits:"+mark3)
+    # etime3=datetime.now()
+    # timedelta3=etime3-dt
+    # mark3=str(round(timedelta3.total_seconds(),3))
+    # print("Preparado "+str(idservel)+" jsontime:"+mark1+" edits:"+mark3)
 
 
 def CheckNovedad(url):
@@ -223,30 +223,35 @@ if __name__ == '__main__':
             GlobalNational(tnation)
             for d in terinput:
                 Territorial(d)
-            for l in locinput:
-                Local(l)
-            dato=update
-            etime=datetime.now()
-            timedelta=etime-stime
-            naclocal.edit_features(updates=tf)
+            print("Inicio Edición")
+            print("Paises EXT")
             paisext.edit_features(updates=ta)
             ttspais.edit_features(adds=ta)
+            print("Regiones")
             regichl.edit_features(updates=tb)
             ttsregi.edit_features(adds=tb)
+            print("Provincias")
             provchl.edit_features(updates=tc)
             ttsprov.edit_features(adds=tc)
+            print("Comunas")
             comuchl.edit_features(updates=td)
             ttscomu.edit_features(adds=td)
             #time.sleep(3)
+            for l in locinput:
+                Local(l)
+            print("Locales")
+            naclocal.edit_features(updates=tf)
             extlocal.edit_features(updates=te)
             ttslocext.edit_features(adds=te)
             #time.sleep(3)
             ttslocnac.edit_features(adds=tf)
             #time.sleep(2)
             resetglobal()
+            dato=update
+            etime=datetime.now()
+            timedelta=etime-stime
             mins=str(round(timedelta.total_seconds()/60,3))
             print('Tiempo Elapsado: '+mins+' minutos')
         else: 
             print ("Todo Igual")
-            print (ta)
         time.sleep(5)
