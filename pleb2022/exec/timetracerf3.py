@@ -1,4 +1,4 @@
-#Fase 2: Instalación de Mesas (4 de septiembre)
+#Fase 3: Resultados Electorales (4 de septiembre-18:00)
 import requests
 from requests.sessions import Session
 import json
@@ -9,7 +9,7 @@ from arcgis.gis import GIS
 #from arcgis.features import GeoAccessor, GeoSeriesAccessor
 from datetime import datetime
 
-event_context='mesas_instaladas'
+event_context='elecciones_constitucion'
 evento='pleb2022'
 folder='lookups'
 s = requests.Session()
@@ -41,12 +41,14 @@ extlocal=ItemSource.layers[1]
 naclocal=ItemSource.layers[0]
 
 print("Inicio Consultas")
-qpext=paisext.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
-qcomu=comuchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
-qprov=provchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
-qregi=regichl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
-qlocn=naclocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
-qloce=extlocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
+qpext=paisext.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
+qcomu=comuchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
+qprov=provchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
+qregi=regichl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
+#qlocn=naclocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
+#qloce=extlocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
+qlocn=naclocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
+qloce=extlocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
 #a paises | b regiones |c provincias |d comunas |e extranjero |f nacional
 ta,tb,tc,td,te,tf=[],[],[],[],[],[]
 layergroup={'pais':paisext,'regiones':regichl,'provincias':provchl,'comunas':comuchl}
@@ -131,7 +133,7 @@ def clasificador(json,ambito):
 #Global
 def GlobalNational(mainnational):
     #Timestamps
-    print('Actualizando Mesas Instaladas a Nivel Nacional')
+    print('Actualizando Resultados a Nivel Nacional')
     dt=datetime.now()
     #Obtención de Jsons
     mesas="https://www.servelelecciones.cl/data/{}/computo/global/19001.json".format(event_context)
@@ -140,9 +142,24 @@ def GlobalNational(mainnational):
     qnation=mainnational.query(out_fields='*')
     modregister=[f for f in qnation][0]
     modregister.attributes['ts']=dt
-    #Mesas    
-    modregister.attributes['iM']=int(jmesas['resumen'][0]['c'].replace(".",""))
-    modregister.attributes['diM']=modregister.attributes['mesas']-int(jmesas['resumen'][0]['c'].replace(".",""))
+    #Votos
+    #opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart   
+    modregister.attributes['opc1']=int(jmesas['data'][0]['c'].replace(".",""))
+    modregister.attributes['opc2']=int(jmesas['data'][1]['c'].replace(".",""))
+    comp={  'Apruebo':modregister.attributes['opc1'],
+            'Rechazo':modregister.attributes['opc2']}
+    if (int(jmesas['resumen'][0]['c'].replace(".","")) != 0)and(modregister.attributes['opc1']!=modregister.attributes['opc2']):
+        modregister.attributes['win']=max(comp,key=comp.get)
+    else: modregister.attributes['win']='Empate'
+    modregister.attributes['vv']=int(jmesas['resumen'][0]['c'].replace(".",""))
+    modregister.attributes['vn']=int(jmesas['resumen'][1]['c'].replace(".",""))
+    modregister.attributes['vb']=int(jmesas['resumen'][2]['c'].replace(".",""))
+    modregister.attributes['vt']=modregister.attributes['vv']+modregister.attributes['vn']+modregister.attributes['vb']
+    modregister.attributes['eM']=int(jmesas['mesasEscrutadas'].replace(".",""))
+    #Proporción Mesas
+    modregister.attributes['ceM']=round((modregister.attributes['eM']/modregister.attributes['mesas'])*100,3)
+    #Proporción Padrón
+    modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)
     print("Preparado Computo Global")
     tnation.edit_features(updates=[modregister])
     ttsnation.edit_features(adds=[modregister])
@@ -162,9 +179,24 @@ def Territorial(tercore):
     qnation=obtenerquery(ambito)
     modregister=[f for f in qnation if f.attributes['OBJECTID']==fcoid][0]
     modregister.attributes['ts']=dt
-    #Mesas    
-    modregister.attributes['iM']=int(jmesas['resumen'][0]['c'].replace(".",""))
-    modregister.attributes['diM']=modregister.attributes['mesas']-int(jmesas['resumen'][0]['c'].replace(".",""))
+    #Resultados    
+    #opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart   
+    modregister.attributes['opc1']=int(jmesas['data'][0]['c'].replace(".",""))
+    modregister.attributes['opc2']=int(jmesas['data'][1]['c'].replace(".",""))
+    comp={  'Apruebo':modregister.attributes['opc1'],
+            'Rechazo':modregister.attributes['opc2']}
+    if (int(jmesas['resumen'][0]['c'].replace(".","")) != 0)and(modregister.attributes['opc1']!=modregister.attributes['opc2']):
+        modregister.attributes['win']=max(comp,key=comp.get)
+    else: modregister.attributes['win']='Empate'
+    modregister.attributes['vv']=int(jmesas['resumen'][0]['c'].replace(".",""))
+    modregister.attributes['vn']=int(jmesas['resumen'][1]['c'].replace(".",""))
+    modregister.attributes['vb']=int(jmesas['resumen'][2]['c'].replace(".",""))
+    modregister.attributes['vt']=modregister.attributes['vv']+modregister.attributes['vn']+modregister.attributes['vb']
+    modregister.attributes['eM']=int(jmesas['mesasEscrutadas'].replace(".",""))
+    #Proporción Mesas
+    modregister.attributes['ceM']=round((modregister.attributes['eM']/modregister.attributes['mesas'])*100,3)
+    #Proporción Padrón
+    modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)    
     asignador(modregister,ambito,False)
     # etime3=datetime.now()
     # timedelta3=etime3-dt
@@ -187,15 +219,24 @@ def Local(localcore):
     qnation=obtenerqueryext(indext)
     modregister=[f for f in qnation if f.attributes['OBJECTID']==fcoid][0]
     modregister.attributes['ts']=dt
-    #Mesas
-    mc=0
-    mnc=0
-    for mesa in jmesas['data']:
-        if mesa['b']=="No Instalada":
-            mnc=mnc+1
-        else: mc=mc+1
-    modregister.attributes['iM']=mc
-    modregister.attributes['diM']=mnc
+    #Resultados    
+    #opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart   
+    modregister.attributes['opc1']=int(jmesas['data'][0]['c'].replace(".",""))
+    modregister.attributes['opc2']=int(jmesas['data'][1]['c'].replace(".",""))
+    comp={  'Apruebo':modregister.attributes['opc1'],
+            'Rechazo':modregister.attributes['opc2']}
+    if (int(jmesas['resumen'][0]['c'].replace(".","")) != 0)and(modregister.attributes['opc1']!=modregister.attributes['opc2']):
+        modregister.attributes['win']=max(comp,key=comp.get)
+    else: modregister.attributes['win']='Empate'
+    modregister.attributes['vv']=int(jmesas['resumen'][0]['c'].replace(".",""))
+    modregister.attributes['vn']=int(jmesas['resumen'][1]['c'].replace(".",""))
+    modregister.attributes['vb']=int(jmesas['resumen'][2]['c'].replace(".",""))
+    modregister.attributes['vt']=modregister.attributes['vv']+modregister.attributes['vn']+modregister.attributes['vb']
+    modregister.attributes['eM']=int(jmesas['mesasEscrutadas'].replace(".",""))
+    #Proporción Mesas
+    modregister.attributes['ceM']=round((modregister.attributes['eM']/modregister.attributes['mesas'])*100,3)
+    #Proporción Padrón
+    modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)    
     asignador(modregister,ambito,indext)
     # etime3=datetime.now()
     # timedelta3=etime3-dt
@@ -223,7 +264,7 @@ if __name__ == '__main__':
             for d in terinput:
                 Territorial(d)
             print("Inicio Edición")
-            print("Paises Extranjeros")
+            print("Paises EXT")
             paisext.edit_features(updates=ta)
             ttspais.edit_features(adds=ta)
             print("Regiones")
