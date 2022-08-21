@@ -1,10 +1,13 @@
 #Fase 3: Resultados Electorales (4 de septiembre-18:00)
+from asyncio import as_completed
 import requests
 from requests.sessions import Session
 import json
 import time
 import datetime
 #from multiprocessing import Pool
+import threading
+import concurrent.futures
 from arcgis.gis import GIS
 #from arcgis.features import GeoAccessor, GeoSeriesAccessor
 from datetime import datetime
@@ -241,7 +244,7 @@ def Local(localcore):
     # etime3=datetime.now()
     # timedelta3=etime3-dt
     # mark3=str(round(timedelta3.total_seconds(),3))
-    # print("Preparado "+str(idservel)+" jsontime:"+mark1+" edits:"+mark3)
+    #print("Preparado "+str(idservel))
 
 
 def CheckNovedad(url):
@@ -260,9 +263,25 @@ if __name__ == '__main__':
         update=CheckNovedad(masterurl)
         if update!=dato:
             stime=datetime.now()
+            hilost=[]
+            hilos=[]
             GlobalNational(tnation)
-            for d in terinput:
-                Territorial(d)
+            print("Iniciando computo territorial")
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                futures=[]
+                for d in terinput:
+                    futures.append(executor.submit(Territorial,tercore=d))
+                for future in concurrent.futures.as_completed(futures):
+                    print(future.result())
+            del executor
+            # for d in terinput:
+                #Territorial(d)
+                # t=threading.Thread(target=Territorial,args=[d])
+                # t.start()
+                # hilost.append(t)
+                # #Territorial(d)
+            # for hilot in hilost:
+            #     hilot.join()            
             print("Inicio Edición")
             print("Paises EXT")
             paisext.edit_features(updates=ta)
@@ -278,8 +297,20 @@ if __name__ == '__main__':
             ttscomu.edit_features(adds=td)
             #time.sleep(3)
             print("Locales")
-            for l in locinput:
-                Local(l)
+            # for l in locinput:
+            #     t=threading.Thread(target=Local,args=[l])
+            #     #Local(l)
+            #     t.start()
+            #     hilos.append(t)
+            # for hilo in hilos:
+            #     hilo.join()
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                futures=[]
+                for l in locinput:
+                    futures.append(executor.submit(Local,localcore=l))
+                for future in concurrent.futures.as_completed(futures):
+                    pass
+            del executor
             print("Edición Locales")
             naclocal.edit_features(updates=tf)
             extlocal.edit_features(updates=te)
