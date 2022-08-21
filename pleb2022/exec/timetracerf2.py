@@ -1,15 +1,16 @@
-#Fase 1: Constitución de Mesas (3 de septiembre)
+#Fase 2: Instalación de Mesas (4 de septiembre)
+from calendar import LocaleTextCalendar
 import requests
 from requests.sessions import Session
 import json
 import time
 import datetime
-#from multiprocessing import Pool
+from multiprocessing import Pool
 from arcgis.gis import GIS
-#from arcgis.features import GeoAccessor, GeoSeriesAccessor
+from arcgis.features import GeoAccessor, GeoSeriesAccessor
 from datetime import datetime
 
-event_context='mesas_constituidas'
+event_context='mesas_instaladas'
 evento='pleb2022'
 folder='lookups'
 s = requests.Session()
@@ -41,12 +42,12 @@ extlocal=ItemSource.layers[1]
 naclocal=ItemSource.layers[0]
 
 print("Inicio Consultas")
-qpext=paisext.query(out_fields='OBJECTID,mesas,ts,cM,dcM,idservel',return_geometry=False)
-qcomu=comuchl.query(out_fields='OBJECTID,mesas,ts,cM,dcM,idservel',return_geometry=False)
-qprov=provchl.query(out_fields='OBJECTID,mesas,ts,cM,dcM,idservel',return_geometry=False)
-qregi=regichl.query(out_fields='OBJECTID,mesas,ts,cM,dcM,idservel',return_geometry=False)
-qlocn=naclocal.query(out_fields='OBJECTID,mesas,ts,cM,dcM,idservel',return_geometry=False)
-qloce=extlocal.query(out_fields='OBJECTID,mesas,ts,cM,dcM,idservel',return_geometry=False)
+qpext=paisext.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
+qcomu=comuchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
+qprov=provchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
+qregi=regichl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
+qlocn=naclocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
+qloce=extlocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
 #a paises | b regiones |c provincias |d comunas |e extranjero |f nacional
 ta,tb,tc,td,te,tf=[],[],[],[],[],[]
 layergroup={'pais':paisext,'regiones':regichl,'provincias':provchl,'comunas':comuchl}
@@ -141,8 +142,8 @@ def GlobalNational(mainnational):
     modregister=[f for f in qnation][0]
     modregister.attributes['ts']=dt
     #Mesas    
-    modregister.attributes['cM']=int(jmesas['resumen'][0]['c'].replace(".",""))
-    modregister.attributes['dcM']=modregister.attributes['mesas']-int(jmesas['resumen'][0]['c'].replace(".",""))
+    modregister.attributes['iM']=int(jmesas['resumen'][0]['c'].replace(".",""))
+    modregister.attributes['diM']=modregister.attributes['mesas']-int(jmesas['resumen'][0]['c'].replace(".",""))
     print("Preparado Computo Global")
     tnation.edit_features(updates=[modregister])
     ttsnation.edit_features(adds=[modregister])
@@ -163,8 +164,8 @@ def Territorial(tercore):
     modregister=[f for f in qnation if f.attributes['OBJECTID']==fcoid][0]
     modregister.attributes['ts']=dt
     #Mesas    
-    modregister.attributes['cM']=int(jmesas['resumen'][0]['c'].replace(".",""))
-    modregister.attributes['dcM']=modregister.attributes['mesas']-int(jmesas['resumen'][0]['c'].replace(".",""))
+    modregister.attributes['iM']=int(jmesas['resumen'][0]['c'].replace(".",""))
+    modregister.attributes['diM']=modregister.attributes['mesas']-int(jmesas['resumen'][0]['c'].replace(".",""))
     asignador(modregister,ambito,False)
     # etime3=datetime.now()
     # timedelta3=etime3-dt
@@ -191,11 +192,11 @@ def Local(localcore):
     mc=0
     mnc=0
     for mesa in jmesas['data']:
-        if mesa['b']=="No Constituida":
+        if mesa['b']=="No Instalada":
             mnc=mnc+1
         else: mc=mc+1
-    modregister.attributes['cM']=mc
-    modregister.attributes['dcM']=mnc
+    modregister.attributes['iM']=mc
+    modregister.attributes['diM']=mnc
     asignador(modregister,ambito,indext)
     # etime3=datetime.now()
     # timedelta3=etime3-dt
@@ -236,9 +237,10 @@ if __name__ == '__main__':
             comuchl.edit_features(updates=td)
             ttscomu.edit_features(adds=td)
             #time.sleep(3)
+            print("Locales")
             for l in locinput:
                 Local(l)
-            print("Locales")
+            print("Edición Locales")
             naclocal.edit_features(updates=tf)
             extlocal.edit_features(updates=te)
             ttslocext.edit_features(adds=te)
