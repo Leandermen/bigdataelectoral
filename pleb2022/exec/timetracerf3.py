@@ -4,10 +4,8 @@ from requests.sessions import Session
 import json
 import time
 import datetime
-#from multiprocessing import Pool
 import concurrent.futures
 from arcgis.gis import GIS
-#from arcgis.features import GeoAccessor, GeoSeriesAccessor
 from datetime import datetime
 
 event_context='elecciones_constitucion'
@@ -19,8 +17,6 @@ dato=1
 update=0
 print("Inicio Conexión GIS")
 gis = GIS("https://www.arcgis.com", 'soportaltda', 'Mhilo.2016', expiration=9999)
-#ItemSource=gis.content.get('d82682aef8f440deb1a35129502ae5a7')
-#ItemTS=gis.content.get('39107a24dd2847b2b3c41f1fe594c354')
 ItemSource=gis.content.get('dacbfde953734f3f9a3c9e604b89dfb1')
 ItemTS=gis.content.get('1cde3f8c703c457c9d7f91f8af42a004')
 #Nación
@@ -46,8 +42,6 @@ qpext=paisext.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2
 qcomu=comuchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
 qprov=provchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
 qregi=regichl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
-#qlocn=naclocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
-#qloce=extlocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,idservel',return_geometry=False)
 qlocn=naclocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
 qloce=extlocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
 #a paises | b regiones |c provincias |d comunas |e extranjero |f nacional
@@ -66,8 +60,6 @@ def obtenerquery(ambito):
 def obtenerqueryext(ext):
     if ext: return querygroupext['ext']
     else: return querygroupext['nac']
-
-
 
 def resetglobal():
     global ta
@@ -174,9 +166,6 @@ def Territorial(tercore):
     #Obtención de Jsons
     mesas="https://www.servelelecciones.cl/data/{}/computo/{}/{}.json".format(event_context,ambito,idservel)
     jmesas=sessioncrawler(mesas)
-    # etime1=datetime.now()
-    # timedelta1=etime1-dt
-    # mark1=str(round(timedelta1.total_seconds(),3))
     qnation=obtenerquery(ambito)
     modregister=[f for f in qnation if f.attributes['OBJECTID']==fcoid][0]
     modregister.attributes['ts']=dt
@@ -199,10 +188,6 @@ def Territorial(tercore):
     #Proporción Padrón
     modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)    
     asignador(modregister,ambito,False)
-    # etime3=datetime.now()
-    # timedelta3=etime3-dt
-    # mark3=str(round(timedelta3.total_seconds(),3))
-    # print("Preparado "+str(idservel)+" jsontime:"+mark1+" edits:"+mark3)
 
 def Local(localcore):
     fcoid=localcore[0]
@@ -214,9 +199,6 @@ def Local(localcore):
     #Obtención de Jsons
     mesas="https://www.servelelecciones.cl/data/{}/computo/{}/{}.json".format(event_context,ambito,idservel)
     jmesas=sessioncrawler(mesas)
-    # etime1=datetime.now()
-    # timedelta1=etime1-dt
-    # mark1=str(round(timedelta1.total_seconds(),3))
     qnation=obtenerqueryext(indext)
     modregister=[f for f in qnation if f.attributes['OBJECTID']==fcoid][0]
     modregister.attributes['ts']=dt
@@ -239,10 +221,6 @@ def Local(localcore):
     #Proporción Padrón
     modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)    
     asignador(modregister,ambito,indext)
-    # etime3=datetime.now()
-    # timedelta3=etime3-dt
-    # mark3=str(round(timedelta3.total_seconds(),3))
-    #print("Preparado "+str(idservel))
 
 
 def CheckNovedad(url):
@@ -266,20 +244,9 @@ if __name__ == '__main__':
             GlobalNational(tnation)
             print("Iniciando computo territorial")
             with concurrent.futures.ThreadPoolExecutor() as executor:
-                futures=[]
                 for d in terinput:
-                    futures.append(executor.submit(Territorial,tercore=d))
-                for future in concurrent.futures.as_completed(futures):
-                    print(future.result())
+                    executor.submit(Territorial,tercore=d)
             del executor
-            # for d in terinput:
-                #Territorial(d)
-                # t=threading.Thread(target=Territorial,args=[d])
-                # t.start()
-                # hilost.append(t)
-                # #Territorial(d)
-            # for hilot in hilost:
-            #     hilot.join()            
             print("Inicio Edición")
             print("Paises EXT")
             paisext.edit_features(updates=ta)
@@ -293,29 +260,16 @@ if __name__ == '__main__':
             print("Comunas")
             comuchl.edit_features(updates=td)
             ttscomu.edit_features(adds=td)
-            #time.sleep(3)
             print("Locales")
-            # for l in locinput:
-            #     t=threading.Thread(target=Local,args=[l])
-            #     #Local(l)
-            #     t.start()
-            #     hilos.append(t)
-            # for hilo in hilos:
-            #     hilo.join()
             with concurrent.futures.ThreadPoolExecutor() as executor:
-                futures=[]
                 for l in locinput:
-                    futures.append(executor.submit(Local,localcore=l))
-                for future in concurrent.futures.as_completed(futures):
-                    pass
+                    executor.submit(Local,localcore=l)
             del executor
             print("Edición Locales")
             naclocal.edit_features(updates=tf)
             extlocal.edit_features(updates=te)
             ttslocext.edit_features(adds=te)
-            #time.sleep(3)
             ttslocnac.edit_features(adds=tf)
-            #time.sleep(2)
             resetglobal()
             dato=update
             etime=datetime.now()
