@@ -1,6 +1,5 @@
 #Fase 1: Constitución de Mesas (3 de septiembre)
 import requests
-from requests.sessions import Session
 import json
 import time
 import datetime

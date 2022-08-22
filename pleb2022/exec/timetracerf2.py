@@ -1,6 +1,5 @@
 #Fase 2: Instalación de Mesas (4 de septiembre)
 import requests
-from requests.sessions import Session
 import json
 import time
 import datetime

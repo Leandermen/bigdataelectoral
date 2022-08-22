@@ -1,6 +1,5 @@
 #Fase 3: Resultados Electorales (4 de septiembre-18:00)
 import requests
-#from requests.sessions import Session
 import json
 import time
 import datetime
