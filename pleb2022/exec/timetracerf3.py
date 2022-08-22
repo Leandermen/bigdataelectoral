@@ -37,12 +37,12 @@ extlocal=ItemSource.layers[1]
 naclocal=ItemSource.layers[0]
 
 print("Inicio Consultas")
-qpext=paisext.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
-qcomu=comuchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
-qprov=provchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
-qregi=regichl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
-qlocn=naclocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
-qloce=extlocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel',return_geometry=False)
+qpext=paisext.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel,NAME_ES',return_geometry=False)
+qcomu=comuchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel,COMUNA',return_geometry=False)
+qprov=provchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel,NOM_PROV',return_geometry=False)
+qregi=regichl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel,NOM_CORTO',return_geometry=False)
+qlocn=naclocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel,LOCAL',return_geometry=False)
+qloce=extlocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,iM,diM,opc1,opc2,vv,vn,vb,vt,eM,ceM,win,cpart,idservel,n_cce',return_geometry=False)
 #a paises | b regiones |c provincias |d comunas |e extranjero |f nacional
 ta,tb,tc,td,te,tf=[],[],[],[],[],[]
 layergroup={'pais':paisext,'regiones':regichl,'provincias':provchl,'comunas':comuchl}
