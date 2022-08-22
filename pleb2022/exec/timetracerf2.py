@@ -5,6 +5,7 @@ import json
 import time
 import datetime
 #from multiprocessing import Pool
+import concurrent.futures
 from arcgis.gis import GIS
 #from arcgis.features import GeoAccessor, GeoSeriesAccessor
 from datetime import datetime
@@ -220,8 +221,16 @@ if __name__ == '__main__':
         if update!=dato:
             stime=datetime.now()
             GlobalNational(tnation)
-            for d in terinput:
-                Territorial(d)
+            print("Iniciando computo territorial")
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                futures=[]
+                for d in terinput:
+                    futures.append(executor.submit(Territorial,tercore=d))
+                for future in concurrent.futures.as_completed(futures):
+                    print(future.result())
+            del executor
+            # for d in terinput:
+            #     Territorial(d)
             print("Inicio Edición")
             print("Paises Extranjeros")
             paisext.edit_features(updates=ta)
@@ -237,8 +246,15 @@ if __name__ == '__main__':
             ttscomu.edit_features(adds=td)
             #time.sleep(3)
             print("Locales")
-            for l in locinput:
-                Local(l)
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                futures=[]
+                for l in locinput:
+                    futures.append(executor.submit(Local,localcore=l))
+                for future in concurrent.futures.as_completed(futures):
+                    pass
+            del executor
+            # for l in locinput:
+            #     Local(l)
             print("Edición Locales")
             naclocal.edit_features(updates=tf)
             extlocal.edit_features(updates=te)

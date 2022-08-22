@@ -1,12 +1,10 @@
 #Fase 3: Resultados Electorales (4 de septiembre-18:00)
-from asyncio import as_completed
 import requests
 from requests.sessions import Session
 import json
 import time
 import datetime
 #from multiprocessing import Pool
-import threading
 import concurrent.futures
 from arcgis.gis import GIS
 #from arcgis.features import GeoAccessor, GeoSeriesAccessor
