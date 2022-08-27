@@ -2,7 +2,7 @@
 import requests
 import json
 import time
-import datetime
+#import datetime
 import concurrent.futures
 from arcgis.gis import GIS
 from datetime import datetime
@@ -129,7 +129,8 @@ def GlobalNational(mainnational):
     dt=datetime.now()
     #Obtención de Jsons
     mesas="https://www.servelelecciones.cl/data/{}/computo/global/19001.json".format(event_context)
-    rmesas = requests.request("GET", mesas, headers={}, data={})
+    #rmesas = requests.request("GET", mesas, headers={}, data={})
+    rmesas = s.get(mesas)
     jmesas=json.loads(rmesas.text)
     qnation=mainnational.query(out_fields='*')
     modregister=[f for f in qnation][0]
@@ -185,7 +186,8 @@ def Local(localcore):
 
 
 def CheckNovedad(url):
-    response = requests.request("GET", masterurl, headers={}, data={})
+    #response = requests.request("GET", masterurl, headers={}, data={})
+    response = s.get(url)
     r=json.loads(response.text)
     mesasinst=int(r['resumen'][0]['c'].replace(".",""))
     return mesasinst
@@ -198,8 +200,9 @@ if __name__ == '__main__':
     locinput=clasificador(jkey,False)
     while True:
         update=CheckNovedad(masterurl)
+        stime=datetime.now()
         if update!=dato:
-            stime=datetime.now()
+            #stime=datetime.now()
             GlobalNational(tnation)
             print("Iniciando computo territorial")
             with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -235,5 +238,5 @@ if __name__ == '__main__':
             mins=str(round(timedelta.total_seconds()/60,3))
             print('Tiempo Elapsado: '+mins+' minutos')
         else: 
-            print ("Todo Igual")
+            print ("Todo Igual"+stime.strftime("%H:%M:%S"))
         time.sleep(5)

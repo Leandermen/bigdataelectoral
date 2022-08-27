@@ -129,7 +129,8 @@ def GlobalNational(mainnational):
     dt=datetime.now()
     #Obtención de Jsons
     mesas="https://www.servelelecciones.cl/data/{}/computo/global/19001.json".format(event_context)
-    rmesas = requests.request("GET", mesas, headers={}, data={})
+    #rmesas = requests.request("GET", mesas, headers={}, data={})
+    rmesas = s.get(mesas)
     jmesas=json.loads(rmesas.text)
     qnation=mainnational.query(out_fields='*')
     modregister=[f for f in qnation][0]
@@ -223,7 +224,8 @@ def Local(localcore):
 
 
 def CheckNovedad(url):
-    response = requests.request("GET", masterurl, headers={}, data={})
+    #response = requests.request("GET", masterurl, headers={}, data={})
+    response = s.get(url)
     r=json.loads(response.text)
     mesasinst=int(r['resumen'][0]['c'].replace(".",""))
     return mesasinst
