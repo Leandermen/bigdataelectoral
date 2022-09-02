@@ -2,7 +2,7 @@
 import requests
 import json
 import time
-import datetime
+#import datetime
 import concurrent.futures
 from arcgis.gis import GIS
 from datetime import datetime
@@ -70,8 +70,10 @@ def resetglobal():
     ta,tb,tc,td,te,tf=[],[],[],[],[],[]
 
 def sessioncrawler(uri):
-    r = s.get(uri)
+    r = s.get(uri,headers={"referer":"https://www.servelelecciones.cl/","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0"})
+    print (r.status_code)
     jmesas=json.loads(r.text)
+    time.sleep(0.05)
     return jmesas
 
 def obtenerservicio(ambito,valor):
@@ -261,7 +263,7 @@ if __name__ == '__main__':
             print("Comunas")
             comuchl.edit_features(updates=td)
             ttscomu.edit_features(adds=td)
-            print("Locales")
+            print("Computando Locales")
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 for l in locinput:
                     executor.submit(Local,localcore=l)
@@ -278,5 +280,5 @@ if __name__ == '__main__':
             mins=str(round(timedelta.total_seconds()/60,3))
             print('Tiempo Elapsado: '+mins+' minutos')
         else: 
-            print ("Todo Igual")
+            print ("Todo Igual "+stime.strftime("%H:%M:%S"))
         time.sleep(5)

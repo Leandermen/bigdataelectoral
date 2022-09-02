@@ -10,7 +10,7 @@ from csv import writer
 evento='pleb2022'
 context_event='elecciones_constitucion'
 folder='lookups'
-
+s = requests.Session()
 ce=open('{}/{}/circelectoral.json'.format(evento,folder),encoding='utf-8')
 jce=json.load(ce)
 tabla=pd.DataFrame(columns=['circelec','nce','idservel','local','kei'])
@@ -22,7 +22,8 @@ for key in jce:
     direccion="https://www.servelelecciones.cl/data/{}/filters/locales/bycirc_electoral/{}.json".format(context_event,k)
     payload={}
     headers = {}
-    response = requests.request("GET", direccion, headers=headers, data=payload)
+    #response = requests.request("GET", direccion, headers=headers, data=payload)
+    response=s.get(direccion)
     datas=json.loads(response.text)
     for esc in datas:
         a=esc['c']
