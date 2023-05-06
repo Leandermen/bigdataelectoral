@@ -11,7 +11,7 @@ folder='lookups'
 s = requests.Session()
 ccs=open("{}/{}/circsenat.json".format(evento,folder),encoding='utf-8')
 jccs=json.load(ccs)
-tabla=pd.DataFrame(columns=['id','csen','pacto','partido','numero','genero','nombre'])
+tabla=pd.DataFrame(columns=['id','csen','pacto','rawpartido','cpartido','numero','genero','nombre','indpart'])
 
 def candNumber(a):
     i=a.find('.')
@@ -50,17 +50,25 @@ for key in jccs:
         pp = pactoPolitico(a['a'])
         for b in a['sd']:
             cstr = b['a']
+            cpp=b['b']
             cname= clearName(cstr) 
             cidx = candNumber(cstr)
             cgen = genderbase(cstr)
+            indep = 0
+            solopp = cpp
+            if cpp[:4] == "IND-":
+                indep = 1
+                solopp = cpp[4:]
             record = {
                 'id':str(k)+'-'+str(pp)+'-'+str(cidx),
                 'csen':k,
                 'pacto':pp,
-                'partido':b['b'],
+                'rawpartido':cpp,
+                'cpartido':solopp,
                 'numero':cidx,
                 'genero':cgen,
-                'nombre':cname
+                'nombre':cname,
+                'indpart':indep
             }
             tabla=tabla.append(record,ignore_index=True)
 
