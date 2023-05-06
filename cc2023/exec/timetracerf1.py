@@ -18,41 +18,26 @@ dato=1
 update=0
 print("Inicio Conexión GIS")
 gis = GIS("https://www.arcgis.com", 'soportaltda', 'Mhilo.2016', expiration=9999)
-ItemSource=gis.content.get('dacbfde953734f3f9a3c9e604b89dfb1')
-ItemTS=gis.content.get('1cde3f8c703c457c9d7f91f8af42a004')
+ItemSource=gis.content.get('8f0e3c359a594606bb7a86bdd83c1971')
 #Nación
-ttsnation=ItemTS.tables[0]
 tnation=ItemSource.tables[0]
 #Territorios
-ttspais=ItemTS.tables[1]
-ttsregi=ItemTS.tables[2]
-ttsprov=ItemTS.tables[3]
-ttscomu=ItemTS.tables[4]
-paisext=ItemSource.layers[5]
-comuchl=ItemSource.layers[4]
-provchl=ItemSource.layers[3]
+comuchl=ItemSource.layers[1]
 regichl=ItemSource.layers[2]
 #Locales
-ttslocext=ItemTS.tables[6]
-ttslocnac=ItemTS.tables[5]
-extlocal=ItemSource.layers[1]
 naclocal=ItemSource.layers[0]
 
 print("Inicio Consultas")
-qpext=paisext.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,idservel,NAME_ES',return_geometry=False)
 qcomu=comuchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,idservel,COMUNA',return_geometry=False)
-qprov=provchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,idservel,NOM_PROV',return_geometry=False)
 qregi=regichl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,idservel,NOM_CORTO',return_geometry=False)
 qlocn=naclocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,idservel,LOCAL',return_geometry=False)
-qloce=extlocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,idservel,n_cce',return_geometry=False)
 #a paises | b regiones |c provincias |d comunas |e extranjero |f nacional
 ta,tb,tc,td,te,tf=[],[],[],[],[],[]
-layergroup={'pais':paisext,'regiones':regichl,'provincias':provchl,'comunas':comuchl}
-ttsgroup={'pais':ttspais,'regiones':ttsregi,'provincias':ttsprov,'comunas':ttscomu}
-querygroup={'pais':qpext,'regiones':qregi,'provincias':qprov,'comunas':qcomu}
-querygroupext={'nac':qlocn,'ext':qloce}
+layergroup={'regiones':regichl,'comunas':comuchl}
+querygroup={'regiones':qregi,'comunas':qcomu}
+querygroupext={'nac':qlocn}
 
-ambitos={'pais':ta,'regiones':tb,'provincias':tc,'comunas':td}
+ambitos={'pais':ta,'regiones':tb,'comunas':td}
 
 print("Inicio Funciones")
 def obtenerquery(ambito):
@@ -72,8 +57,8 @@ def resetglobal():
     ta,tb,tc,td,te,tf=[],[],[],[],[],[]
 
 def sessioncrawler(uri):
-    r = s.get(uri,headers={"referer":"https://www.servelelecciones.cl/","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0"})
-    print (r.status_code)
+    r = s.get(uri,headers={"referer":"https://www.servelelecciones.cl/","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 Edg/112.0.1722.68"})
+    #print (r.status_code)
     jmesas=json.loads(r.text)
     time.sleep(0.05)
     return jmesas
@@ -81,7 +66,6 @@ def sessioncrawler(uri):
 def obtenerservicio(ambito,valor):
     if valor == 0:            
         return layergroup[ambito]
-    else: return ttsgroup[ambito]
 
 def asignador(dato,ambito,indext):
     global ta
@@ -94,8 +78,6 @@ def asignador(dato,ambito,indext):
         ta.append(dato)
     elif ambito == 'regiones':
         tb.append(dato)
-    elif ambito == 'provincias':
-        tc.append(dato)
     elif ambito == 'comunas':
         td.append(dato)
     elif ambito == 'locales':
@@ -144,7 +126,6 @@ def GlobalNational(mainnational):
     modregister.attributes['dcM']=modregister.attributes['mesas']-int(jmesas['resumen'][0]['c'].replace(".",""))
     print("Preparado Computo Global")
     tnation.edit_features(updates=[modregister])
-    ttsnation.edit_features(adds=[modregister])
 
 def Territorial(tercore):
     fcoid=tercore[0]
@@ -157,6 +138,7 @@ def Territorial(tercore):
     jmesas=sessioncrawler(mesas)
     qnation=obtenerquery(ambito)
     modregister=[f for f in qnation if f.attributes['OBJECTID']==fcoid][0]
+    modregister.attributes['mesas']=int(jmesas['resumen'][0]['b'].replace(".",""))
     modregister.attributes['ts']=dt
     #Mesas    
     modregister.attributes['cM']=int(jmesas['resumen'][0]['c'].replace(".",""))
@@ -191,7 +173,9 @@ def Local(localcore):
 
 def CheckNovedad(url):
     #response = requests.request("GET", masterurl, headers={}, data={})
-    response = s.get(url)
+    print(url)
+    response = s.get(url,headers={"referer":"https://www.servelelecciones.cl/","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 Edg/112.0.1722.68"})
+    print (response.status_code)
     r=json.loads(response.text)
     mesasinst=int(r['resumen'][0]['c'].replace(".",""))
     return mesasinst
@@ -214,18 +198,10 @@ if __name__ == '__main__':
                     executor.submit(Territorial,tercore=d)
             del executor
             print("Inicio Edición")
-            print("Paises EXT")
-            paisext.edit_features(updates=ta)
-            ttspais.edit_features(adds=ta)
             print("Regiones")
             regichl.edit_features(updates=tb)
-            ttsregi.edit_features(adds=tb)
-            print("Provincias")
-            provchl.edit_features(updates=tc)
-            ttsprov.edit_features(adds=tc)
             print("Comunas")
             comuchl.edit_features(updates=td)
-            ttscomu.edit_features(adds=td)
             print("Computando Locales")
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 for l in locinput:
@@ -233,9 +209,6 @@ if __name__ == '__main__':
             del executor
             print("Locales")
             naclocal.edit_features(updates=tf)
-            extlocal.edit_features(updates=te)
-            ttslocext.edit_features(adds=te)
-            ttslocnac.edit_features(adds=tf)
             resetglobal()
             dato=update
             etime=datetime.now()
