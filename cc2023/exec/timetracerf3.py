@@ -156,7 +156,6 @@ def GlobalNational(mainnational):
             modregister.attributes['win']=maximo
         else: modregister.attributes['win']='T'    
     else: modregister.attributes['win']='T'
-    
     modregister.attributes['vv']=int(jmesas['resumen'][0]['c'].replace(".",""))
     modregister.attributes['vn']=int(jmesas['resumen'][1]['c'].replace(".",""))
     modregister.attributes['vb']=int(jmesas['resumen'][2]['c'].replace(".",""))
