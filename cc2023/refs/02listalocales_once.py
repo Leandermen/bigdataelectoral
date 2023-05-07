@@ -19,7 +19,7 @@ tabla=pd.DataFrame(columns=['c_circ','nce','idservel','local','kei'])
 
 reg=open("{}/{}/regiones.json".format(evento,folder))
 jreg=json.load(reg)
-tablapres=pd.DataFrame(columns=['c_reg','c_prov','c_com','c_circ'])
+tablapres=pd.DataFrame(columns=['c_reg','c_prov','c_com','c_circ','c_csen'])
 
 for key in jce:
     k=key['c']
@@ -40,7 +40,11 @@ for key in jce:
 
 for region in jreg:
     creg=region['c']
+    urlcsen="https://www.servelelecciones.cl/data/{}/filters/circ_senatorial/byregion/{}.json".format(context_event,creg)
     urlprov="https://www.servelelecciones.cl/data/{}/filters/provincias/byregion/{}.json".format(context_event,creg)
+    rpcsen = requests.request("GET", urlcsen, headers={}, data={})
+    csen=json.loads(rpcsen.text)
+    keycsen=csen[0]['c']
     rpprov = requests.request("GET", urlprov, headers={}, data={})
     provincias=json.loads(rpprov.text)
     for provincia in provincias:
@@ -62,7 +66,8 @@ for region in jreg:
                     'c_reg':creg,
                     'c_prov':cpro,
                     'c_com':ccom,
-                    'c_circ':ccel
+                    'c_circ':ccel,
+                    'c_csen':keycsen
                 }
                 tablapres=tablapres.append(fila,ignore_index=True)
 
@@ -70,7 +75,7 @@ shintabla = tabla.join(tablapres.set_index('c_circ'),on='c_circ')
 
 
 shintabla.to_csv(path_or_buf='{}/{}/tbllocalesservel.csv'.format(evento,folder),index=False,encoding='utf-8')
-#tabla.to_json(path_or_buf='{}/{}/localesservel.json'.format(evento,folder),orient='records',force_ascii=False)
+tablapres.to_json(path_or_buf='{}/{}/idsdpac.json'.format(evento,folder),orient='records',force_ascii=False)
 #tabla.to_csv(path_or_buf='{}/{}/tbllocalesservel.csv'.format(evento,folder),index=False,encoding='utf-8')
 reg.close()
 ce.close()

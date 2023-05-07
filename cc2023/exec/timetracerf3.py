@@ -34,6 +34,10 @@ ccomuna=ItemSource.tables[2]
 clocal=ItemSource.tables[3]
 cdhondt=ItemSource.tables[4]
 
+dpa=open('{}/{}/idsdpac.json'.format(evento,folder),encoding='utf-8')
+jdpa=json.load(dpa)
+localcsen=open('{}/{}/localcsen.json'.format(evento,folder),encoding='utf-8')
+jlcs=json.load(localcsen)
 
 processid= str(uuid.uuid4())
 print("Proceso: "+processid)
@@ -42,14 +46,14 @@ qcomu=comuchl.query(out_fields='OBJECTID,mesas,padron,ts,processid,opc1,opc2,opc
 qregi=regichl.query(out_fields='OBJECTID,mesas,padron,ts,processid,opc1,opc2,opc3,opc4,opc5,opc6,vv,vn,vb,vt,eM,ceM,win,cpart,c_csen,escanos,idservel,NOM_CORTO',return_geometry=False)
 qlocn=naclocal.query(out_fields='OBJECTID,mesas,padron,ts,processid,opc1,opc2,opc3,opc4,opc5,opc6,vv,vn,vb,vt,eM,ceM,win,cpart,idservel,LOCAL',return_geometry=False)
 #Consultas Candidatos
-qcreg=cregion.query(out_fields='OBJECTID,idcan,csen,lista,partido,cpartido,n_cartilla,genero,nombre,esind,idservel',return_geometry=False,order_by_fields='csen ASC,votos DESC')
-qccom=ccomuna.query(out_fields='*',return_geometry=False)
-qcloc=clocal.query(out_fields='*',return_geometry=False)
+qcreg=cregion.query(out_fields='OBJECTID,idcan,ts,processid,csen,lista,partido,cpartido,n_cartilla,genero,nombre,esind,idservel,votos,cVotos',return_geometry=False,order_by_fields='csen ASC,votos DESC')
+qccom=ccomuna.query(out_fields='OBJECTID,idcan,ts,processid,csen,lista,partido,cpartido,n_cartilla,genero,nombre,esind,idservel,votos,cVotos',return_geometry=False)
+qcloc=clocal.query(out_fields='OBJECTID,idcan,ts,processid,csen,lista,partido,cpartido,n_cartilla,genero,nombre,esind,idservel,votos,cVotos',return_geometry=False)
 
 
 #a paises | b regiones |c provincias |d comunas |e extranjero |f nacional
 ta,tb,tc,td,te,tf=[],[],[],[],[],[]
-tdhondt=[]
+tdhondt,tcanreg,tcancom,tcanloc=[],[],[],[]
 layergroup={'regiones':regichl,'comunas':comuchl}
 querygroup={'regiones':qregi,'comunas':qcomu}
 querygroupext={'nac':qlocn}
@@ -64,9 +68,6 @@ def obtenerqueryext(ext):
     if ext: return querygroupext['ext']
     else: return querygroupext['nac']
 
-
-
-
 def resetglobal():
     global ta
     global tb
@@ -74,7 +75,11 @@ def resetglobal():
     global td
     global te
     global tf
-    ta,tb,tc,td,te,tf=[],[],[],[],[],[]
+    global tdhondt
+    global tcanreg
+    global tcancom
+    global tcanloc
+    ta,tb,tc,td,te,tf,tdhondt,tcanreg,tcancom,tcanloc=[],[],[],[],[],[],[],[],[],[]
 
 def sessioncrawler(uri):
     r = s.get(uri,headers={"referer":"https://www.servelelecciones.cl/","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 Edg/112.0.1722.68"})
@@ -104,6 +109,22 @@ def asignador(dato,ambito,indext):
         if indext:
             te.append(dato)
         else: tf.append(dato)
+
+def getcsen(ids):
+    result=0
+    for res in jdpa:
+        if res['c_com']==ids:
+            result=res['c_csen']
+            break
+    return result
+
+def getcsenfromlocal(ids):
+    result=0
+    for res in jlcs:
+        if res['c_com']==ids:
+            result=res['c_csen']
+            break
+    return result
 
 def clasificador(json,ambito):
     inarray=[]
@@ -147,6 +168,10 @@ def pactoPolitico(a):
         return base[0]
     else: return "IND"
 
+def candNumber(a):
+    i=a.find('.')
+    result = a[:i]
+    return result
 
 def analisisdhondt(esc,elec,reg):
     global tdhondt
@@ -176,6 +201,62 @@ def analisisdhondt(esc,elec,reg):
             tdhondt.append(can)
 
     
+def updatecreg(csen):
+    dt=datetime.now()
+    resr="https://www.servelelecciones.cl/data/{}/computo/circ_senatorial/{}.json".format(event_context,csen)
+    jresr=sessioncrawler(resr)
+    for a in jresr['data']:
+        pp = pactoPolitico(a['a'])
+        for b in a['sd']:
+            cstr = b['a']
+            cidx = candNumber(cstr)
+            noperc = b['d'].replace("%","")
+            idcan=str(csen)+'-'+str(pp)+'-'+str(cidx)
+            datarect=[f for f in qcreg if f.attributes['idcan']==idcan][0]            
+            datarect.attributes['ts']=dt
+            datarect.attributes['processid']=processid
+            datarect.attributes['votos']=int(b['c'].replace(".",""))
+            datarect.attributes['cVotos']=round(float(noperc.replace(",",".")),2)
+            tcanreg.append(datarect)
+
+def updateccom(com,csen):
+    dt=datetime.now()
+    resr="https://www.servelelecciones.cl/data/{}/computo/comunas/{}.json".format(event_context,com)
+    jresr=sessioncrawler(resr)
+    for a in jresr['data']:
+        pp = pactoPolitico(a['a'])
+        for b in a['sd']:
+            cstr = b['a']
+            cidx = candNumber(cstr)
+            noperc = b['d'].replace("%","")
+            idcan=str(com)+'-'+str(csen)+'-'+str(pp)+'-'+str(cidx)
+            datarect=[f for f in qccom if f.attributes['idcan']==idcan][0]
+            datarect.attributes['ts']=dt
+            datarect.attributes['processid']=processid
+            datarect.attributes['votos']=int(b['c'].replace(".",""))
+            datarect.attributes['cVotos']=round(float(noperc.replace(",",".")),2)
+            tcancom.append(datarect)
+
+def updatecloc(local,csen):
+    dt=datetime.now()
+    resr="https://www.servelelecciones.cl/data/{}/computo/locales/{}.json".format(event_context,local)
+    jresr=sessioncrawler(resr)
+    for a in jresr['data']:
+        pp = pactoPolitico(a['a'])
+        for b in a['sd']:
+            cstr = b['a']
+            cidx = candNumber(cstr)
+            noperc = b['d'].replace("%","")
+            idcan=str(local)+'-'+str(csen)+'-'+str(pp)+'-'+str(cidx)
+            print(idcan)
+            datarect=[f for f in qcloc if f.attributes['idcan']==idcan][0]
+            print (datarect)
+            datarect.attributes['ts']=dt
+            datarect.attributes['processid']=processid
+            datarect.attributes['votos']=int(b['c'].replace(".",""))
+            datarect.attributes['cVotos']=round(float(noperc.replace(",",".")),2)
+            
+            tcanloc.append(datarect)
 
 
 #Global
@@ -274,7 +355,11 @@ def Territorial(tercore):
     #Proporción Padrón
     #modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)    
     if ambito=="regiones":
-        analisisdhondt(modregister.attributes['escanos'],comp,modregister.attributes['idservel'])        
+        updatecreg(modregister.attributes['c_csen'])
+        analisisdhondt(modregister.attributes['escanos'],comp,modregister.attributes['idservel'])
+    if ambito=='comunas':
+        ncsen=getcsen(modregister.attributes['idservel'])
+        updateccom(modregister.attributes['idservel'],ncsen)        
     asignador(modregister,ambito,False)
 
 def Local(localcore):
@@ -323,7 +408,9 @@ def Local(localcore):
     #Proporción Mesas
     modregister.attributes['ceM']=round((modregister.attributes['eM']/modregister.attributes['mesas'])*100,3)
     #Proporción Padrón
-    #modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)    
+    #modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)
+    ncsen=getcsenfromlocal(modregister.attributes['idservel'])
+    updatecloc(modregister.attributes['idservel'],ncsen)
     asignador(modregister,ambito,indext)
 
 
@@ -364,6 +451,10 @@ if __name__ == '__main__':
             comuchl.edit_features(updates=td)
             print("Candidatos Electos")
             cdhondt.edit_features(adds=tdhondt)
+            print("Resultados regionales por candidato")
+            cregion.edit_features(updates=tcanreg)
+            print("Resultados comunales por candidato")
+            ccomuna.edit_features(updates=tcancom)
             print("Computando Locales")
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 for l in locinput:
@@ -371,6 +462,8 @@ if __name__ == '__main__':
             del executor
             print("Edición Locales")
             naclocal.edit_features(updates=tf)
+            print("Edición Resultados Locales")
+            clocal.edit_features(updates=tcanloc)
             resetglobal()
             dato=update
             etime=datetime.now()
