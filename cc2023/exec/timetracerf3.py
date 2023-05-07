@@ -42,7 +42,7 @@ qcomu=comuchl.query(out_fields='OBJECTID,mesas,padron,ts,processid,opc1,opc2,opc
 qregi=regichl.query(out_fields='OBJECTID,mesas,padron,ts,processid,opc1,opc2,opc3,opc4,opc5,opc6,vv,vn,vb,vt,eM,ceM,win,cpart,c_csen,escanos,idservel,NOM_CORTO',return_geometry=False)
 qlocn=naclocal.query(out_fields='OBJECTID,mesas,padron,ts,processid,opc1,opc2,opc3,opc4,opc5,opc6,vv,vn,vb,vt,eM,ceM,win,cpart,idservel,LOCAL',return_geometry=False)
 #Consultas Candidatos
-qcreg=cregion.query(out_fields='OBJECTID,idcan,csen,lista,partido,cpartido,n_cartilla,genero,nombre,esind,idservel',return_geometry=False,order_by_fields='csen ASC,n_cartilla ASC')
+qcreg=cregion.query(out_fields='OBJECTID,idcan,csen,lista,partido,cpartido,n_cartilla,genero,nombre,esind,idservel',return_geometry=False,order_by_fields='csen ASC,votos DESC')
 qccom=ccomuna.query(out_fields='*',return_geometry=False)
 qcloc=clocal.query(out_fields='*',return_geometry=False)
 
@@ -166,7 +166,7 @@ def analisisdhondt(esc,elec,reg):
     sumalist={}
     for items in result:
         sumalist[items] = result.count(items)
-    print(sumalist)
+    #print(sumalist)
     for key in sumalist:
         a=key
         if a == 'I':
@@ -344,14 +344,15 @@ if __name__ == '__main__':
     locinput=clasificador(jkey,False)
     while True:
         update=CheckNovedad(masterurl)
+        stime=datetime.now()
         if update!=dato:
             cdhondt.manager.truncate()
             time.sleep(3)
-            stime=datetime.now()
             hilost=[]
             hilos=[]
             GlobalNational(tnation)
             print("Iniciando computo territorial")
+            qcreg=cregion.query(out_fields='OBJECTID,idcan,csen,lista,partido,cpartido,n_cartilla,genero,nombre,esind,idservel',return_geometry=False,order_by_fields='csen ASC,votos DESC')
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 for d in terinput:
                     executor.submit(Territorial,tercore=d)
