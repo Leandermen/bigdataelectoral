@@ -2,6 +2,8 @@
 import requests
 import json
 import time
+import uuid
+import numpy as np
 #import datetime
 import concurrent.futures
 from arcgis.gis import GIS
@@ -26,13 +28,28 @@ comuchl=ItemSource.layers[1]
 regichl=ItemSource.layers[2]
 #Locales
 naclocal=ItemSource.layers[0]
+#Candidatos
+cregion=ItemSource.tables[1]
+ccomuna=ItemSource.tables[2]
+clocal=ItemSource.tables[3]
+cdhondt=ItemSource.tables[4]
 
+
+processid= str(uuid.uuid4())
+print("Proceso: "+processid)
 print("Inicio Consultas")
-qcomu=comuchl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,opc1,opc2,opc3,opc4,opc5,opc6,vv,vn,vb,vt,eM,ceM,win,cpart,idservel,COMUNA',return_geometry=False)
-qregi=regichl.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,opc1,opc2,opc3,opc4,opc5,opc6,vv,vn,vb,vt,eM,ceM,win,cpart,idservel,NOM_CORTO',return_geometry=False)
-qlocn=naclocal.query(out_fields='OBJECTID,mesas,padron,ts,cM,dcM,opc1,opc2,opc3,opc4,opc5,opc6,vv,vn,vb,vt,eM,ceM,win,cpart,idservel,LOCAL',return_geometry=False)
+qcomu=comuchl.query(out_fields='OBJECTID,mesas,padron,ts,processid,opc1,opc2,opc3,opc4,opc5,opc6,vv,vn,vb,vt,eM,ceM,win,cpart,idservel,COMUNA',return_geometry=False)
+qregi=regichl.query(out_fields='OBJECTID,mesas,padron,ts,processid,opc1,opc2,opc3,opc4,opc5,opc6,vv,vn,vb,vt,eM,ceM,win,cpart,c_csen,escanos,idservel,NOM_CORTO',return_geometry=False)
+qlocn=naclocal.query(out_fields='OBJECTID,mesas,padron,ts,processid,opc1,opc2,opc3,opc4,opc5,opc6,vv,vn,vb,vt,eM,ceM,win,cpart,idservel,LOCAL',return_geometry=False)
+#Consultas Candidatos
+qcreg=cregion.query(out_fields='OBJECTID,idcan,csen,lista,partido,cpartido,n_cartilla,genero,nombre,esind,idservel',return_geometry=False,order_by_fields='csen ASC,n_cartilla ASC')
+qccom=ccomuna.query(out_fields='*',return_geometry=False)
+qcloc=clocal.query(out_fields='*',return_geometry=False)
+
+
 #a paises | b regiones |c provincias |d comunas |e extranjero |f nacional
 ta,tb,tc,td,te,tf=[],[],[],[],[],[]
+tdhondt=[]
 layergroup={'regiones':regichl,'comunas':comuchl}
 querygroup={'regiones':qregi,'comunas':qcomu}
 querygroupext={'nac':qlocn}
@@ -46,6 +63,9 @@ def obtenerquery(ambito):
 def obtenerqueryext(ext):
     if ext: return querygroupext['ext']
     else: return querygroupext['nac']
+
+
+
 
 def resetglobal():
     global ta
@@ -121,9 +141,46 @@ def asignaOpcion(texto):
         return 'opc5'
     else: return 'opc6'
 
+def pactoPolitico(a):
+    base=a[0:2]
+    if base[1] == '.':
+        return base[0]
+    else: return "IND"
+
+
+def analisisdhondt(esc,elec,reg):
+    global tdhondt
+    i=1
+    dic2= {}
+    result =[]
+    while i<=esc:
+        for llave in elec:
+            clavecomp='i'+str(i)+llave
+            valor=elec[llave]/i
+            dic2[clavecomp]=valor
+        i=i+1
+    dic2sort={k: v for k, v in reversed(sorted(dic2.items(), key=lambda item: item[1]))}
+    seleccion=list(dic2sort.keys())[:esc]
+    for a in seleccion:
+        result.append(a[2:])
+    sumalist={}
+    for items in result:
+        sumalist[items] = result.count(items)
+    print(sumalist)
+    for key in sumalist:
+        a=key
+        if a == 'I':
+            a='IND'
+        consulta = [f for f in qcreg if f.attributes['idservel']==reg and f.attributes['lista']==a][:sumalist[key]]
+        for can in consulta:
+            tdhondt.append(can)
+
+    
+
 
 #Global
 def GlobalNational(mainnational):
+    global processid
     #Timestamps
     print('Actualizando Resultados a Nivel Nacional')
     dt=datetime.now()
@@ -135,6 +192,7 @@ def GlobalNational(mainnational):
     qnation=mainnational.query(out_fields='*')
     modregister=[f for f in qnation][0]
     modregister.attributes['ts']=dt
+    modregister.attributes['processid']=processid
     #Votos
     #opc1,opc2,opc3,opc4,opc5,opc6,vv,vn,vb,vt,eM,ceM,win,cpart   
     modregister.attributes['opc1']=int(jmesas['data'][0]['c'].replace(".",""))
@@ -181,6 +239,7 @@ def Territorial(tercore):
     qnation=obtenerquery(ambito)
     modregister=[f for f in qnation if f.attributes['OBJECTID']==fcoid][0]
     modregister.attributes['ts']=dt
+    modregister.attributes['processid']=processid
     #Resultados    
     #opc1,opc2,opc3,opc4,opc5,opc6,vv,vn,vb,vt,eM,ceM,win,cpart   
     modregister.attributes['opc1']=0
@@ -214,6 +273,8 @@ def Territorial(tercore):
     modregister.attributes['ceM']=round((modregister.attributes['eM']/modregister.attributes['mesas'])*100,3)
     #Proporción Padrón
     #modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)    
+    if ambito=="regiones":
+        analisisdhondt(modregister.attributes['escanos'],comp,modregister.attributes['idservel'])        
     asignador(modregister,ambito,False)
 
 def Local(localcore):
@@ -229,6 +290,7 @@ def Local(localcore):
     qnation=obtenerqueryext(indext)
     modregister=[f for f in qnation if f.attributes['OBJECTID']==fcoid][0]
     modregister.attributes['ts']=dt
+    modregister.attributes['processid']=processid
     #Resultados       
     #opc1,opc2,opc3,opc4,opc5,opc6,vv,vn,vb,vt,eM,ceM,win,cpart   
     modregister.attributes['opc1']=0
@@ -283,6 +345,7 @@ if __name__ == '__main__':
     while True:
         update=CheckNovedad(masterurl)
         if update!=dato:
+            cdhondt.manager.truncate()
             time.sleep(3)
             stime=datetime.now()
             hilost=[]
@@ -298,6 +361,8 @@ if __name__ == '__main__':
             regichl.edit_features(updates=tb)
             print("Comunas")
             comuchl.edit_features(updates=td)
+            print("Candidatos Electos")
+            cdhondt.edit_features(adds=tdhondt)
             print("Computando Locales")
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 for l in locinput:
@@ -314,3 +379,5 @@ if __name__ == '__main__':
         else: 
             print ("Todo Igual "+stime.strftime("%H:%M:%S"))
         time.sleep(5)
+        processid=str(uuid.uuid4())
+        print (processid)
