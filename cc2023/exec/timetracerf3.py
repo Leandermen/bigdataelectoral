@@ -121,8 +121,8 @@ def getcsen(ids):
 def getcsenfromlocal(ids):
     result=0
     for res in jlcs:
-        if res['c_com']==ids:
-            result=res['c_csen']
+        if res['local']==ids:
+            result=res['csen']
             break
     return result
 
@@ -219,11 +219,9 @@ def updatecreg(csen):
             datarect.attributes['cVotos']=round(float(noperc.replace(",",".")),2)
             tcanreg.append(datarect)
 
-def updateccom(com,csen):
+def updateccom(com,csen,data):
     dt=datetime.now()
-    resr="https://www.servelelecciones.cl/data/{}/computo/comunas/{}.json".format(event_context,com)
-    jresr=sessioncrawler(resr)
-    for a in jresr['data']:
+    for a in data['data']:
         pp = pactoPolitico(a['a'])
         for b in a['sd']:
             cstr = b['a']
@@ -237,25 +235,20 @@ def updateccom(com,csen):
             datarect.attributes['cVotos']=round(float(noperc.replace(",",".")),2)
             tcancom.append(datarect)
 
-def updatecloc(local,csen):
+def updatecloc(local,csen,data):
     dt=datetime.now()
-    resr="https://www.servelelecciones.cl/data/{}/computo/locales/{}.json".format(event_context,local)
-    jresr=sessioncrawler(resr)
-    for a in jresr['data']:
+    for a in data['data']:
         pp = pactoPolitico(a['a'])
         for b in a['sd']:
             cstr = b['a']
             cidx = candNumber(cstr)
             noperc = b['d'].replace("%","")
             idcan=str(local)+'-'+str(csen)+'-'+str(pp)+'-'+str(cidx)
-            print(idcan)
             datarect=[f for f in qcloc if f.attributes['idcan']==idcan][0]
-            print (datarect)
             datarect.attributes['ts']=dt
             datarect.attributes['processid']=processid
             datarect.attributes['votos']=int(b['c'].replace(".",""))
             datarect.attributes['cVotos']=round(float(noperc.replace(",",".")),2)
-            
             tcanloc.append(datarect)
 
 
@@ -270,6 +263,7 @@ def GlobalNational(mainnational):
     #rmesas = requests.request("GET", mesas, headers={}, data={})
     rmesas = s.get(mesas)
     jmesas=json.loads(rmesas.text)
+    print (jmesas)
     qnation=mainnational.query(out_fields='*')
     modregister=[f for f in qnation][0]
     modregister.attributes['ts']=dt
@@ -292,7 +286,7 @@ def GlobalNational(mainnational):
     if (int(jmesas['resumen'][0]['c'].replace(".","")) != 0):
         maximo = [k for k, v in comp.items() if v == max(comp.values())]
         if len(maximo)==1:
-            modregister.attributes['win']=maximo
+            modregister.attributes['win']=maximo[0]
         else: modregister.attributes['win']='T'    
     else: modregister.attributes['win']='T'
     modregister.attributes['vv']=int(jmesas['resumen'][0]['c'].replace(".",""))
@@ -305,6 +299,7 @@ def GlobalNational(mainnational):
     #Proporción Padrón
     modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)
     print("Preparado Computo Global")
+    print (modregister)
     tnation.edit_features(updates=[modregister])
     ttsnation.edit_features(adds=[modregister])
 
@@ -342,7 +337,7 @@ def Territorial(tercore):
     if (int(jmesas['resumen'][0]['c'].replace(".","")) != 0):
         maximo = [k for k, v in comp.items() if v == max(comp.values())]
         if len(maximo)==1:
-            modregister.attributes['win']=maximo
+            modregister.attributes['win']=maximo[0]
         else: modregister.attributes['win']='T'    
     else: modregister.attributes['win']='T'
     modregister.attributes['vv']=int(jmesas['resumen'][0]['c'].replace(".",""))
@@ -359,7 +354,7 @@ def Territorial(tercore):
         analisisdhondt(modregister.attributes['escanos'],comp,modregister.attributes['idservel'])
     if ambito=='comunas':
         ncsen=getcsen(modregister.attributes['idservel'])
-        updateccom(modregister.attributes['idservel'],ncsen)        
+        updateccom(modregister.attributes['idservel'],ncsen,jmesas)        
     asignador(modregister,ambito,False)
 
 def Local(localcore):
@@ -397,7 +392,7 @@ def Local(localcore):
     if (int(jmesas['resumen'][0]['c'].replace(".","")) != 0):
         maximo = [k for k, v in comp.items() if v == max(comp.values())]
         if len(maximo)==1:
-            modregister.attributes['win']=maximo
+            modregister.attributes['win']=maximo[0]
         else: modregister.attributes['win']='T'    
     else: modregister.attributes['win']='T'
     modregister.attributes['vv']=int(jmesas['resumen'][0]['c'].replace(".",""))
@@ -409,8 +404,8 @@ def Local(localcore):
     modregister.attributes['ceM']=round((modregister.attributes['eM']/modregister.attributes['mesas'])*100,3)
     #Proporción Padrón
     #modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)
-    ncsen=getcsenfromlocal(modregister.attributes['idservel'])
-    updatecloc(modregister.attributes['idservel'],ncsen)
+    #ncsen=getcsenfromlocal(modregister.attributes['idservel'])
+    #updatecloc(modregister.attributes['idservel'],ncsen,jmesas)
     asignador(modregister,ambito,indext)
 
 
@@ -462,8 +457,8 @@ if __name__ == '__main__':
             del executor
             print("Edición Locales")
             naclocal.edit_features(updates=tf)
-            print("Edición Resultados Locales")
-            clocal.edit_features(updates=tcanloc)
+            #print("Edición Resultados Locales")
+            #clocal.edit_features(updates=tcanloc)
             resetglobal()
             dato=update
             etime=datetime.now()
