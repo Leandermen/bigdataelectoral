@@ -59,6 +59,8 @@ querygroup={'regiones':qregi,'comunas':qcomu}
 querygroupext={'nac':qlocn}
 
 ambitos={'pais':ta,'regiones':tb,'comunas':td}
+cloc=1
+
 
 print("Inicio Funciones")
 def obtenerquery(ambito):
@@ -236,6 +238,7 @@ def updateccom(com,csen,data):
             tcancom.append(datarect)
 
 def updatecloc(local,csen,data):
+    global cloc
     dt=datetime.now()
     for a in data['data']:
         pp = pactoPolitico(a['a'])
@@ -250,6 +253,8 @@ def updatecloc(local,csen,data):
             datarect.attributes['votos']=int(b['c'].replace(".",""))
             datarect.attributes['cVotos']=round(float(noperc.replace(",",".")),2)
             tcanloc.append(datarect)
+            print (cloc)
+            cloc = cloc+1
 
 
 #Global
@@ -348,7 +353,7 @@ def Territorial(tercore):
     #Proporción Mesas
     modregister.attributes['ceM']=round((modregister.attributes['eM']/modregister.attributes['mesas'])*100,3)
     #Proporción Padrón
-    #modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)    
+    modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)    
     if ambito=="regiones":
         updatecreg(modregister.attributes['c_csen'])
         analisisdhondt(modregister.attributes['escanos'],comp,modregister.attributes['idservel'])
@@ -403,9 +408,9 @@ def Local(localcore):
     #Proporción Mesas
     modregister.attributes['ceM']=round((modregister.attributes['eM']/modregister.attributes['mesas'])*100,3)
     #Proporción Padrón
-    #modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)
-    #ncsen=getcsenfromlocal(modregister.attributes['idservel'])
-    #updatecloc(modregister.attributes['idservel'],ncsen,jmesas)
+    modregister.attributes['cpart']=round((modregister.attributes['vt']/modregister.attributes['padron'])*100,3)
+    ncsen=getcsenfromlocal(modregister.attributes['idservel'])
+    updatecloc(modregister.attributes['idservel'],ncsen,jmesas)
     asignador(modregister,ambito,indext)
 
 
@@ -457,8 +462,8 @@ if __name__ == '__main__':
             del executor
             print("Edición Locales")
             naclocal.edit_features(updates=tf)
-            #print("Edición Resultados Locales")
-            #clocal.edit_features(updates=tcanloc)
+            print("Edición Resultados Locales")
+            clocal.edit_features(updates=tcanloc)
             resetglobal()
             dato=update
             etime=datetime.now()
