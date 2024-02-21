@@ -1,0 +1,1386 @@
+[
+    {
+        "codcom": "01101",
+        "nomcom": "Iquique"
+    },
+    {
+        "codcom": "01107",
+        "nomcom": "Alto Hospicio"
+    },
+    {
+        "codcom": "01401",
+        "nomcom": "Pozo Almonte"
+    },
+    {
+        "codcom": "01402",
+        "nomcom": "Camiña"
+    },
+    {
+        "codcom": "01403",
+        "nomcom": "Colchane"
+    },
+    {
+        "codcom": "01404",
+        "nomcom": "Huara"
+    },
+    {
+        "codcom": "01405",
+        "nomcom": "Pica"
+    },
+    {
+        "codcom": "02101",
+        "nomcom": "Antofagasta"
+    },
+    {
+        "codcom": "02102",
+        "nomcom": "Mejillones"
+    },
+    {
+        "codcom": "02103",
+        "nomcom": "Sierra Gorda"
+    },
+    {
+        "codcom": "02104",
+        "nomcom": "Taltal"
+    },
+    {
+        "codcom": "02201",
+        "nomcom": "Calama"
+    },
+    {
+        "codcom": "02202",
+        "nomcom": "Ollagüe"
+    },
+    {
+        "codcom": "02203",
+        "nomcom": "San Pedro de Atacama"
+    },
+    {
+        "codcom": "02301",
+        "nomcom": "Tocopilla"
+    },
+    {
+        "codcom": "02302",
+        "nomcom": "María Elena"
+    },
+    {
+        "codcom": "03101",
+        "nomcom": "Copiapó"
+    },
+    {
+        "codcom": "03102",
+        "nomcom": "Caldera"
+    },
+    {
+        "codcom": "03103",
+        "nomcom": "Tierra Amarilla"
+    },
+    {
+        "codcom": "03201",
+        "nomcom": "Chañaral"
+    },
+    {
+        "codcom": "03202",
+        "nomcom": "Diego de Almagro"
+    },
+    {
+        "codcom": "03301",
+        "nomcom": "Vallenar"
+    },
+    {
+        "codcom": "03302",
+        "nomcom": "Alto del Carmen"
+    },
+    {
+        "codcom": "03303",
+        "nomcom": "Freirina"
+    },
+    {
+        "codcom": "03304",
+        "nomcom": "Huasco"
+    },
+    {
+        "codcom": "04101",
+        "nomcom": "La Serena"
+    },
+    {
+        "codcom": "04102",
+        "nomcom": "Coquimbo"
+    },
+    {
+        "codcom": "04103",
+        "nomcom": "Andacollo"
+    },
+    {
+        "codcom": "04104",
+        "nomcom": "La Higuera"
+    },
+    {
+        "codcom": "04105",
+        "nomcom": "Paiguano"
+    },
+    {
+        "codcom": "04106",
+        "nomcom": "Vicuña"
+    },
+    {
+        "codcom": "04201",
+        "nomcom": "Illapel"
+    },
+    {
+        "codcom": "04202",
+        "nomcom": "Canela"
+    },
+    {
+        "codcom": "04203",
+        "nomcom": "Los Vilos"
+    },
+    {
+        "codcom": "04204",
+        "nomcom": "Salamanca"
+    },
+    {
+        "codcom": "04301",
+        "nomcom": "Ovalle"
+    },
+    {
+        "codcom": "04302",
+        "nomcom": "Combarbalá"
+    },
+    {
+        "codcom": "04303",
+        "nomcom": "Monte Patria"
+    },
+    {
+        "codcom": "04304",
+        "nomcom": "Punitaqui"
+    },
+    {
+        "codcom": "04305",
+        "nomcom": "Río Hurtado"
+    },
+    {
+        "codcom": "05101",
+        "nomcom": "Valparaíso"
+    },
+    {
+        "codcom": "05102",
+        "nomcom": "Casablanca"
+    },
+    {
+        "codcom": "05103",
+        "nomcom": "Concón"
+    },
+    {
+        "codcom": "05104",
+        "nomcom": "Juan Fernández"
+    },
+    {
+        "codcom": "05105",
+        "nomcom": "Puchuncaví"
+    },
+    {
+        "codcom": "05107",
+        "nomcom": "Quintero"
+    },
+    {
+        "codcom": "05109",
+        "nomcom": "Viña del Mar"
+    },
+    {
+        "codcom": "05201",
+        "nomcom": "Isla de Pascua"
+    },
+    {
+        "codcom": "05301",
+        "nomcom": "Los Andes"
+    },
+    {
+        "codcom": "05302",
+        "nomcom": "Calle Larga"
+    },
+    {
+        "codcom": "05303",
+        "nomcom": "Rinconada"
+    },
+    {
+        "codcom": "05304",
+        "nomcom": "San Esteban"
+    },
+    {
+        "codcom": "05401",
+        "nomcom": "La Ligua"
+    },
+    {
+        "codcom": "05402",
+        "nomcom": "Cabildo"
+    },
+    {
+        "codcom": "05403",
+        "nomcom": "Papudo"
+    },
+    {
+        "codcom": "05404",
+        "nomcom": "Petorca"
+    },
+    {
+        "codcom": "05405",
+        "nomcom": "Zapallar"
+    },
+    {
+        "codcom": "05501",
+        "nomcom": "Quillota"
+    },
+    {
+        "codcom": "05502",
+        "nomcom": "Calera"
+    },
+    {
+        "codcom": "05503",
+        "nomcom": "Hijuelas"
+    },
+    {
+        "codcom": "05504",
+        "nomcom": "La Cruz"
+    },
+    {
+        "codcom": "05506",
+        "nomcom": "Nogales"
+    },
+    {
+        "codcom": "05601",
+        "nomcom": "San Antonio"
+    },
+    {
+        "codcom": "05602",
+        "nomcom": "Algarrobo"
+    },
+    {
+        "codcom": "05603",
+        "nomcom": "Cartagena"
+    },
+    {
+        "codcom": "05604",
+        "nomcom": "El Quisco"
+    },
+    {
+        "codcom": "05605",
+        "nomcom": "El Tabo"
+    },
+    {
+        "codcom": "05606",
+        "nomcom": "Santo Domingo"
+    },
+    {
+        "codcom": "05701",
+        "nomcom": "San Felipe"
+    },
+    {
+        "codcom": "05702",
+        "nomcom": "Catemu"
+    },
+    {
+        "codcom": "05703",
+        "nomcom": "Llaillay"
+    },
+    {
+        "codcom": "05704",
+        "nomcom": "Panquehue"
+    },
+    {
+        "codcom": "05705",
+        "nomcom": "Putaendo"
+    },
+    {
+        "codcom": "05706",
+        "nomcom": "Santa María"
+    },
+    {
+        "codcom": "05801",
+        "nomcom": "Quilpué"
+    },
+    {
+        "codcom": "05802",
+        "nomcom": "Limache"
+    },
+    {
+        "codcom": "05803",
+        "nomcom": "Olmué"
+    },
+    {
+        "codcom": "05804",
+        "nomcom": "Villa Alemana"
+    },
+    {
+        "codcom": "06101",
+        "nomcom": "Rancagua"
+    },
+    {
+        "codcom": "06102",
+        "nomcom": "Codegua"
+    },
+    {
+        "codcom": "06103",
+        "nomcom": "Coinco"
+    },
+    {
+        "codcom": "06104",
+        "nomcom": "Coltauco"
+    },
+    {
+        "codcom": "06105",
+        "nomcom": "Doñihue"
+    },
+    {
+        "codcom": "06106",
+        "nomcom": "Graneros"
+    },
+    {
+        "codcom": "06107",
+        "nomcom": "Las Cabras"
+    },
+    {
+        "codcom": "06108",
+        "nomcom": "Machalí"
+    },
+    {
+        "codcom": "06109",
+        "nomcom": "Malloa"
+    },
+    {
+        "codcom": "06110",
+        "nomcom": "Mostazal"
+    },
+    {
+        "codcom": "06111",
+        "nomcom": "Olivar"
+    },
+    {
+        "codcom": "06112",
+        "nomcom": "Peumo"
+    },
+    {
+        "codcom": "06113",
+        "nomcom": "Pichidegua"
+    },
+    {
+        "codcom": "06114",
+        "nomcom": "Quinta de Tilcoco"
+    },
+    {
+        "codcom": "06115",
+        "nomcom": "Rengo"
+    },
+    {
+        "codcom": "06116",
+        "nomcom": "Requínoa"
+    },
+    {
+        "codcom": "06117",
+        "nomcom": "San Vicente"
+    },
+    {
+        "codcom": "06201",
+        "nomcom": "Pichilemu"
+    },
+    {
+        "codcom": "06202",
+        "nomcom": "La Estrella"
+    },
+    {
+        "codcom": "06203",
+        "nomcom": "Litueche"
+    },
+    {
+        "codcom": "06204",
+        "nomcom": "Marchihue"
+    },
+    {
+        "codcom": "06205",
+        "nomcom": "Navidad"
+    },
+    {
+        "codcom": "06206",
+        "nomcom": "Paredones"
+    },
+    {
+        "codcom": "06301",
+        "nomcom": "San Fernando"
+    },
+    {
+        "codcom": "06302",
+        "nomcom": "Chépica"
+    },
+    {
+        "codcom": "06303",
+        "nomcom": "Chimbarongo"
+    },
+    {
+        "codcom": "06304",
+        "nomcom": "Lolol"
+    },
+    {
+        "codcom": "06305",
+        "nomcom": "Nancagua"
+    },
+    {
+        "codcom": "06306",
+        "nomcom": "Palmilla"
+    },
+    {
+        "codcom": "06307",
+        "nomcom": "Peralillo"
+    },
+    {
+        "codcom": "06308",
+        "nomcom": "Placilla"
+    },
+    {
+        "codcom": "06309",
+        "nomcom": "Pumanque"
+    },
+    {
+        "codcom": "06310",
+        "nomcom": "Santa Cruz"
+    },
+    {
+        "codcom": "07101",
+        "nomcom": "Talca"
+    },
+    {
+        "codcom": "07102",
+        "nomcom": "Constitución"
+    },
+    {
+        "codcom": "07103",
+        "nomcom": "Curepto"
+    },
+    {
+        "codcom": "07104",
+        "nomcom": "Empedrado"
+    },
+    {
+        "codcom": "07105",
+        "nomcom": "Maule"
+    },
+    {
+        "codcom": "07106",
+        "nomcom": "Pelarco"
+    },
+    {
+        "codcom": "07107",
+        "nomcom": "Pencahue"
+    },
+    {
+        "codcom": "07108",
+        "nomcom": "Río Claro"
+    },
+    {
+        "codcom": "07109",
+        "nomcom": "San Clemente"
+    },
+    {
+        "codcom": "07110",
+        "nomcom": "San Rafael"
+    },
+    {
+        "codcom": "07201",
+        "nomcom": "Cauquenes"
+    },
+    {
+        "codcom": "07202",
+        "nomcom": "Chanco"
+    },
+    {
+        "codcom": "07203",
+        "nomcom": "Pelluhue"
+    },
+    {
+        "codcom": "07301",
+        "nomcom": "Curicó"
+    },
+    {
+        "codcom": "07302",
+        "nomcom": "Hualañé"
+    },
+    {
+        "codcom": "07303",
+        "nomcom": "Licantén"
+    },
+    {
+        "codcom": "07304",
+        "nomcom": "Molina"
+    },
+    {
+        "codcom": "07305",
+        "nomcom": "Rauco"
+    },
+    {
+        "codcom": "07306",
+        "nomcom": "Romeral"
+    },
+    {
+        "codcom": "07307",
+        "nomcom": "Sagrada Familia"
+    },
+    {
+        "codcom": "07308",
+        "nomcom": "Teno"
+    },
+    {
+        "codcom": "07309",
+        "nomcom": "Vichuquén"
+    },
+    {
+        "codcom": "07401",
+        "nomcom": "Linares"
+    },
+    {
+        "codcom": "07402",
+        "nomcom": "Colbún"
+    },
+    {
+        "codcom": "07403",
+        "nomcom": "Longaví"
+    },
+    {
+        "codcom": "07404",
+        "nomcom": "Parral"
+    },
+    {
+        "codcom": "07405",
+        "nomcom": "Retiro"
+    },
+    {
+        "codcom": "07406",
+        "nomcom": "San Javier"
+    },
+    {
+        "codcom": "07407",
+        "nomcom": "Villa Alegre"
+    },
+    {
+        "codcom": "07408",
+        "nomcom": "Yerbas Buenas"
+    },
+    {
+        "codcom": "08101",
+        "nomcom": "Concepción"
+    },
+    {
+        "codcom": "08102",
+        "nomcom": "Coronel"
+    },
+    {
+        "codcom": "08103",
+        "nomcom": "Chiguayante"
+    },
+    {
+        "codcom": "08104",
+        "nomcom": "Florida"
+    },
+    {
+        "codcom": "08105",
+        "nomcom": "Hualqui"
+    },
+    {
+        "codcom": "08106",
+        "nomcom": "Lota"
+    },
+    {
+        "codcom": "08107",
+        "nomcom": "Penco"
+    },
+    {
+        "codcom": "08108",
+        "nomcom": "San Pedro de la Paz"
+    },
+    {
+        "codcom": "08109",
+        "nomcom": "Santa Juana"
+    },
+    {
+        "codcom": "08110",
+        "nomcom": "Talcahuano"
+    },
+    {
+        "codcom": "08111",
+        "nomcom": "Tomé"
+    },
+    {
+        "codcom": "08112",
+        "nomcom": "Hualpén"
+    },
+    {
+        "codcom": "08201",
+        "nomcom": "Lebu"
+    },
+    {
+        "codcom": "08202",
+        "nomcom": "Arauco"
+    },
+    {
+        "codcom": "08203",
+        "nomcom": "Cañete"
+    },
+    {
+        "codcom": "08204",
+        "nomcom": "Contulmo"
+    },
+    {
+        "codcom": "08205",
+        "nomcom": "Curanilahue"
+    },
+    {
+        "codcom": "08206",
+        "nomcom": "Los Alamos"
+    },
+    {
+        "codcom": "08207",
+        "nomcom": "Tirúa"
+    },
+    {
+        "codcom": "08301",
+        "nomcom": "Los Angeles"
+    },
+    {
+        "codcom": "08302",
+        "nomcom": "Antuco"
+    },
+    {
+        "codcom": "08303",
+        "nomcom": "Cabrero"
+    },
+    {
+        "codcom": "08304",
+        "nomcom": "Laja"
+    },
+    {
+        "codcom": "08305",
+        "nomcom": "Mulchén"
+    },
+    {
+        "codcom": "08306",
+        "nomcom": "Nacimiento"
+    },
+    {
+        "codcom": "08307",
+        "nomcom": "Negrete"
+    },
+    {
+        "codcom": "08308",
+        "nomcom": "Quilaco"
+    },
+    {
+        "codcom": "08309",
+        "nomcom": "Quilleco"
+    },
+    {
+        "codcom": "08310",
+        "nomcom": "San Rosendo"
+    },
+    {
+        "codcom": "08311",
+        "nomcom": "Santa Bárbara"
+    },
+    {
+        "codcom": "08312",
+        "nomcom": "Tucapel"
+    },
+    {
+        "codcom": "08313",
+        "nomcom": "Yumbel"
+    },
+    {
+        "codcom": "08314",
+        "nomcom": "Alto Biobío"
+    },
+    {
+        "codcom": "09101",
+        "nomcom": "Temuco"
+    },
+    {
+        "codcom": "09102",
+        "nomcom": "Carahue"
+    },
+    {
+        "codcom": "09103",
+        "nomcom": "Cunco"
+    },
+    {
+        "codcom": "09104",
+        "nomcom": "Curarrehue"
+    },
+    {
+        "codcom": "09105",
+        "nomcom": "Freire"
+    },
+    {
+        "codcom": "09106",
+        "nomcom": "Galvarino"
+    },
+    {
+        "codcom": "09107",
+        "nomcom": "Gorbea"
+    },
+    {
+        "codcom": "09108",
+        "nomcom": "Lautaro"
+    },
+    {
+        "codcom": "09109",
+        "nomcom": "Loncoche"
+    },
+    {
+        "codcom": "09110",
+        "nomcom": "Melipeuco"
+    },
+    {
+        "codcom": "09111",
+        "nomcom": "Nueva Imperial"
+    },
+    {
+        "codcom": "09112",
+        "nomcom": "Padre Las Casas"
+    },
+    {
+        "codcom": "09113",
+        "nomcom": "Perquenco"
+    },
+    {
+        "codcom": "09114",
+        "nomcom": "Pitrufquén"
+    },
+    {
+        "codcom": "09115",
+        "nomcom": "Pucón"
+    },
+    {
+        "codcom": "09116",
+        "nomcom": "Saavedra"
+    },
+    {
+        "codcom": "09117",
+        "nomcom": "Teodoro Schmidt"
+    },
+    {
+        "codcom": "09118",
+        "nomcom": "Toltén"
+    },
+    {
+        "codcom": "09119",
+        "nomcom": "Vilcún"
+    },
+    {
+        "codcom": "09120",
+        "nomcom": "Villarrica"
+    },
+    {
+        "codcom": "09121",
+        "nomcom": "Cholchol"
+    },
+    {
+        "codcom": "09201",
+        "nomcom": "Angol"
+    },
+    {
+        "codcom": "09202",
+        "nomcom": "Collipulli"
+    },
+    {
+        "codcom": "09203",
+        "nomcom": "Curacautín"
+    },
+    {
+        "codcom": "09204",
+        "nomcom": "Ercilla"
+    },
+    {
+        "codcom": "09205",
+        "nomcom": "Lonquimay"
+    },
+    {
+        "codcom": "09206",
+        "nomcom": "Los Sauces"
+    },
+    {
+        "codcom": "09207",
+        "nomcom": "Lumaco"
+    },
+    {
+        "codcom": "09208",
+        "nomcom": "Purén"
+    },
+    {
+        "codcom": "09209",
+        "nomcom": "Renaico"
+    },
+    {
+        "codcom": "09210",
+        "nomcom": "Traiguén"
+    },
+    {
+        "codcom": "09211",
+        "nomcom": "Victoria"
+    },
+    {
+        "codcom": "10101",
+        "nomcom": "Puerto Montt"
+    },
+    {
+        "codcom": "10102",
+        "nomcom": "Calbuco"
+    },
+    {
+        "codcom": "10103",
+        "nomcom": "Cochamó"
+    },
+    {
+        "codcom": "10104",
+        "nomcom": "Fresia"
+    },
+    {
+        "codcom": "10105",
+        "nomcom": "Frutillar"
+    },
+    {
+        "codcom": "10106",
+        "nomcom": "Los Muermos"
+    },
+    {
+        "codcom": "10107",
+        "nomcom": "Llanquihue"
+    },
+    {
+        "codcom": "10108",
+        "nomcom": "Maullín"
+    },
+    {
+        "codcom": "10109",
+        "nomcom": "Puerto Varas"
+    },
+    {
+        "codcom": "10201",
+        "nomcom": "Castro"
+    },
+    {
+        "codcom": "10202",
+        "nomcom": "Ancud"
+    },
+    {
+        "codcom": "10203",
+        "nomcom": "Chonchi"
+    },
+    {
+        "codcom": "10204",
+        "nomcom": "Curaco de Vélez"
+    },
+    {
+        "codcom": "10205",
+        "nomcom": "Dalcahue"
+    },
+    {
+        "codcom": "10206",
+        "nomcom": "Puqueldón"
+    },
+    {
+        "codcom": "10207",
+        "nomcom": "Queilén"
+    },
+    {
+        "codcom": "10208",
+        "nomcom": "Quellón"
+    },
+    {
+        "codcom": "10209",
+        "nomcom": "Quemchi"
+    },
+    {
+        "codcom": "10210",
+        "nomcom": "Quinchao"
+    },
+    {
+        "codcom": "10301",
+        "nomcom": "Osorno"
+    },
+    {
+        "codcom": "10302",
+        "nomcom": "Puerto Octay"
+    },
+    {
+        "codcom": "10303",
+        "nomcom": "Purranque"
+    },
+    {
+        "codcom": "10304",
+        "nomcom": "Puyehue"
+    },
+    {
+        "codcom": "10305",
+        "nomcom": "Río Negro"
+    },
+    {
+        "codcom": "10306",
+        "nomcom": "San Juan de la Costa"
+    },
+    {
+        "codcom": "10307",
+        "nomcom": "San Pablo"
+    },
+    {
+        "codcom": "10401",
+        "nomcom": "Chaitén"
+    },
+    {
+        "codcom": "10402",
+        "nomcom": "Futaleufú"
+    },
+    {
+        "codcom": "10403",
+        "nomcom": "Hualaihué"
+    },
+    {
+        "codcom": "10404",
+        "nomcom": "Palena"
+    },
+    {
+        "codcom": "11101",
+        "nomcom": "Coihaique"
+    },
+    {
+        "codcom": "11102",
+        "nomcom": "Lago Verde"
+    },
+    {
+        "codcom": "11201",
+        "nomcom": "Aisén"
+    },
+    {
+        "codcom": "11202",
+        "nomcom": "Cisnes"
+    },
+    {
+        "codcom": "11203",
+        "nomcom": "Guaitecas"
+    },
+    {
+        "codcom": "11301",
+        "nomcom": "Cochrane"
+    },
+    {
+        "codcom": "11302",
+        "nomcom": "O'Higgins"
+    },
+    {
+        "codcom": "11303",
+        "nomcom": "Tortel"
+    },
+    {
+        "codcom": "11401",
+        "nomcom": "Chile Chico"
+    },
+    {
+        "codcom": "11402",
+        "nomcom": "Río Ibáñez"
+    },
+    {
+        "codcom": "12101",
+        "nomcom": "Punta Arenas"
+    },
+    {
+        "codcom": "12102",
+        "nomcom": "Laguna Blanca"
+    },
+    {
+        "codcom": "12103",
+        "nomcom": "Río Verde"
+    },
+    {
+        "codcom": "12104",
+        "nomcom": "San Gregorio"
+    },
+    {
+        "codcom": "12201",
+        "nomcom": "Cabo de Hornos"
+    },
+    {
+        "codcom": "12202",
+        "nomcom": "Antártica"
+    },
+    {
+        "codcom": "12301",
+        "nomcom": "Porvenir"
+    },
+    {
+        "codcom": "12302",
+        "nomcom": "Primavera"
+    },
+    {
+        "codcom": "12303",
+        "nomcom": "Timaukel"
+    },
+    {
+        "codcom": "12401",
+        "nomcom": "Natales"
+    },
+    {
+        "codcom": "12402",
+        "nomcom": "Torres del Paine"
+    },
+    {
+        "codcom": "13101",
+        "nomcom": "Santiago"
+    },
+    {
+        "codcom": "13102",
+        "nomcom": "Cerrillos"
+    },
+    {
+        "codcom": "13103",
+        "nomcom": "Cerro Navia"
+    },
+    {
+        "codcom": "13104",
+        "nomcom": "Conchalí"
+    },
+    {
+        "codcom": "13105",
+        "nomcom": "El Bosque"
+    },
+    {
+        "codcom": "13106",
+        "nomcom": "Estación Central"
+    },
+    {
+        "codcom": "13107",
+        "nomcom": "Huechuraba"
+    },
+    {
+        "codcom": "13108",
+        "nomcom": "Independencia"
+    },
+    {
+        "codcom": "13109",
+        "nomcom": "La Cisterna"
+    },
+    {
+        "codcom": "13110",
+        "nomcom": "La Florida"
+    },
+    {
+        "codcom": "13111",
+        "nomcom": "La Granja"
+    },
+    {
+        "codcom": "13112",
+        "nomcom": "La Pintana"
+    },
+    {
+        "codcom": "13113",
+        "nomcom": "La Reina"
+    },
+    {
+        "codcom": "13114",
+        "nomcom": "Las Condes"
+    },
+    {
+        "codcom": "13115",
+        "nomcom": "Lo Barnechea"
+    },
+    {
+        "codcom": "13116",
+        "nomcom": "Lo Espejo"
+    },
+    {
+        "codcom": "13117",
+        "nomcom": "Lo Prado"
+    },
+    {
+        "codcom": "13118",
+        "nomcom": "Macul"
+    },
+    {
+        "codcom": "13119",
+        "nomcom": "Maipú"
+    },
+    {
+        "codcom": "13120",
+        "nomcom": "Ñuñoa"
+    },
+    {
+        "codcom": "13121",
+        "nomcom": "Pedro Aguirre Cerda"
+    },
+    {
+        "codcom": "13122",
+        "nomcom": "Peñalolén"
+    },
+    {
+        "codcom": "13123",
+        "nomcom": "Providencia"
+    },
+    {
+        "codcom": "13124",
+        "nomcom": "Pudahuel"
+    },
+    {
+        "codcom": "13125",
+        "nomcom": "Quilicura"
+    },
+    {
+        "codcom": "13126",
+        "nomcom": "Quinta Normal"
+    },
+    {
+        "codcom": "13127",
+        "nomcom": "Recoleta"
+    },
+    {
+        "codcom": "13128",
+        "nomcom": "Renca"
+    },
+    {
+        "codcom": "13129",
+        "nomcom": "San Joaquín"
+    },
+    {
+        "codcom": "13130",
+        "nomcom": "San Miguel"
+    },
+    {
+        "codcom": "13131",
+        "nomcom": "San Ramón"
+    },
+    {
+        "codcom": "13132",
+        "nomcom": "Vitacura"
+    },
+    {
+        "codcom": "13201",
+        "nomcom": "Puente Alto"
+    },
+    {
+        "codcom": "13202",
+        "nomcom": "Pirque"
+    },
+    {
+        "codcom": "13203",
+        "nomcom": "San José de Maipo"
+    },
+    {
+        "codcom": "13301",
+        "nomcom": "Colina"
+    },
+    {
+        "codcom": "13302",
+        "nomcom": "Lampa"
+    },
+    {
+        "codcom": "13303",
+        "nomcom": "Tiltil"
+    },
+    {
+        "codcom": "13401",
+        "nomcom": "San Bernardo"
+    },
+    {
+        "codcom": "13402",
+        "nomcom": "Buin"
+    },
+    {
+        "codcom": "13403",
+        "nomcom": "Calera de Tango"
+    },
+    {
+        "codcom": "13404",
+        "nomcom": "Paine"
+    },
+    {
+        "codcom": "13501",
+        "nomcom": "Melipilla"
+    },
+    {
+        "codcom": "13502",
+        "nomcom": "Alhué"
+    },
+    {
+        "codcom": "13503",
+        "nomcom": "Curacaví"
+    },
+    {
+        "codcom": "13504",
+        "nomcom": "María Pinto"
+    },
+    {
+        "codcom": "13505",
+        "nomcom": "San Pedro"
+    },
+    {
+        "codcom": "13601",
+        "nomcom": "Talagante"
+    },
+    {
+        "codcom": "13602",
+        "nomcom": "El Monte"
+    },
+    {
+        "codcom": "13603",
+        "nomcom": "Isla de Maipo"
+    },
+    {
+        "codcom": "13604",
+        "nomcom": "Padre Hurtado"
+    },
+    {
+        "codcom": "13605",
+        "nomcom": "Peñaflor"
+    },
+    {
+        "codcom": "14101",
+        "nomcom": "Valdivia"
+    },
+    {
+        "codcom": "14102",
+        "nomcom": "Corral"
+    },
+    {
+        "codcom": "14103",
+        "nomcom": "Lanco"
+    },
+    {
+        "codcom": "14104",
+        "nomcom": "Los Lagos"
+    },
+    {
+        "codcom": "14105",
+        "nomcom": "Máfil"
+    },
+    {
+        "codcom": "14106",
+        "nomcom": "Mariquina"
+    },
+    {
+        "codcom": "14107",
+        "nomcom": "Paillaco"
+    },
+    {
+        "codcom": "14108",
+        "nomcom": "Panguipulli"
+    },
+    {
+        "codcom": "14201",
+        "nomcom": "La Unión"
+    },
+    {
+        "codcom": "14202",
+        "nomcom": "Futrono"
+    },
+    {
+        "codcom": "14203",
+        "nomcom": "Lago Ranco"
+    },
+    {
+        "codcom": "14204",
+        "nomcom": "Río Bueno"
+    },
+    {
+        "codcom": "15101",
+        "nomcom": "Arica"
+    },
+    {
+        "codcom": "15102",
+        "nomcom": "Camarones"
+    },
+    {
+        "codcom": "15201",
+        "nomcom": "Putre"
+    },
+    {
+        "codcom": "15202",
+        "nomcom": "General Lagos"
+    },
+    {
+        "codcom": "16101",
+        "nomcom": "Chillán"
+    },
+    {
+        "codcom": "16102",
+        "nomcom": "Bulnes"
+    },
+    {
+        "codcom": "16103",
+        "nomcom": "Chillán Viejo"
+    },
+    {
+        "codcom": "16104",
+        "nomcom": "El Carmen"
+    },
+    {
+        "codcom": "16105",
+        "nomcom": "Pemuco"
+    },
+    {
+        "codcom": "16106",
+        "nomcom": "Pinto"
+    },
+    {
+        "codcom": "16107",
+        "nomcom": "Quillón"
+    },
+    {
+        "codcom": "16108",
+        "nomcom": "San Ignacio"
+    },
+    {
+        "codcom": "16109",
+        "nomcom": "Yungay"
+    },
+    {
+        "codcom": "16201",
+        "nomcom": "Quirihue"
+    },
+    {
+        "codcom": "16202",
+        "nomcom": "Cobquecura"
+    },
+    {
+        "codcom": "16203",
+        "nomcom": "Coelemu"
+    },
+    {
+        "codcom": "16204",
+        "nomcom": "Ninhue"
+    },
+    {
+        "codcom": "16205",
+        "nomcom": "Portezuelo"
+    },
+    {
+        "codcom": "16206",
+        "nomcom": "Ranquil"
+    },
+    {
+        "codcom": "16207",
+        "nomcom": "Treguaco"
+    },
+    {
+        "codcom": "16301",
+        "nomcom": "San Carlos"
+    },
+    {
+        "codcom": "16302",
+        "nomcom": "Coihueco"
+    },
+    {
+        "codcom": "16303",
+        "nomcom": "Ñiquén"
+    },
+    {
+        "codcom": "16304",
+        "nomcom": "San Fabián"
+    },
+    {
+        "codcom": "16305",
+        "nomcom": "San Nicolás"
+    }
+]
