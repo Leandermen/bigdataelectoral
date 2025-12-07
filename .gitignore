@@ -1,3 +1,9 @@
+# Carpetas Personalizadas
+gen2025/pngs/*
+gen2025/actas/*
+gen2025/outputs/*
+gen2025/testdata/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
