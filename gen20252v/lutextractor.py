@@ -4,6 +4,7 @@ import json
 from io import BytesIO
 import os
 import pandas as pd
+from datetime import datetime
 
 #Variables de asistencia
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
@@ -26,17 +27,19 @@ def download_and_extract(url_path):
             config_data = json.load(config_file)
     
     # Save config.json to output directory with UTF-8 encoding
-    output_path = os.path.join(output_dir, json_filename)
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    json_filename_with_timestamp = json_filename.replace(".json", f"_{timestamp}.json")
+    output_path = os.path.join(output_dir, json_filename_with_timestamp)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(config_data, f, indent=2, ensure_ascii=False)
     
     print(f"config.json saved to {output_path}")
 
 if __name__ == "__main__":
-    download_and_extract("https://segundavotacion.servel.cl/config.zip")
-    download_and_extract("https://segundavotacion.servel.cl/iteracion.zip")
-    download_and_extract("https://segundavotacion.servel.cl/candidaturas.zip")
-    download_and_extract("https://segundavotacion.servel.cl/territorios.zip")
-    download_and_extract("https://segundavotacion.servel.cl/territorios_ext.zip")
+    #download_and_extract("https://segundavotacion.servel.cl/config.zip")
+    #download_and_extract("https://segundavotacion.servel.cl/iteracion.zip")
+    #download_and_extract("https://segundavotacion.servel.cl/candidaturas.zip")
+    #download_and_extract("https://segundavotacion.servel.cl/territorios.zip")
+    #download_and_extract("https://segundavotacion.servel.cl/territorios_ext.zip")
     download_and_extract("https://segundavotacion.servel.cl/nomina_completa_4.zip")
     download_and_extract("https://segundavotacion.servel.cl/total_votacion_4.zip")

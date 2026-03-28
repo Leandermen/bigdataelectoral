@@ -7,7 +7,7 @@ import pandas as pd
 from arcgis.gis import GIS
 
 # URL of the zip file
-url = "https://elecciones.servel.cl/nomina_completa_4.zip"
+url = "https://segundavotacion.servel.cl/nomina_completa_4.zip"
 
 # Download the zip file
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
